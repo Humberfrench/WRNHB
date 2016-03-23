@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Repositorio"
+                   namespace="Repositorio.Entidades">
+  <class name="Usuario">
+    
+    <id name="Id">
+      <generator class="identity" />
+    </id>    
+    
+    <property name="Login" />
+    <property name="Senha" />
+    <property name="Nome" />
+    <property name="Gravar" />
+    <property name="Alterar" />
+    <property name="Deletar" />
+
+    <bag name="Pedidos">
+      <key column="UsuarioId"/>
+      <one-to-many class="Pedido"/>      
+    </bag>
+    
+  </class>
+</hibernate-mapping>

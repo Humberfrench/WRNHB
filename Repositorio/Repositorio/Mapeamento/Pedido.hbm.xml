@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Repositorio"
+                   namespace="Repositorio.Entidades">
+  <class name="Pedido">
+    
+    <id name="Id">
+      <generator class="identity" />
+    </id>
+    
+    <property name="DataPedido" />
+    <property name="Descricao" />
+    <property name="Aplicacao" />
+    <property name="Criador" />
+    <property name="DataPrevisaoLayout" />
+    <property name="DataPrevisaoEntrega" />
+    <property name="HoraPrevisaoEntrega" />
+    <property name="Observacao" />
+    <property name="Situacao" />
+    <property name="Valor" />
+    <property name="Sinal" />
+    <property name="ValorSinal" />
+    
+    <many-to-one name="Usuario" column="UsuarioId"/>
+    <many-to-one name="Cliente" column="ClienteId"/>
+    <many-to-one name="OrigemDoPedido" column="OrigemDoPedidoId"/>
+    <many-to-one name="TipoDeServico" column="TipoDeServicoId"/>
+    <many-to-one name="Armazenamento" column="ArmazenamentoId"/>
+    <many-to-one name="TipoDePagamento" column="TipoDePagamentoId"/>
+    
+  </class>
+</hibernate-mapping>
+

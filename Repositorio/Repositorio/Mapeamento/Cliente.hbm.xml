@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="Repositorio"
+                   namespace="Repositorio.Entidades">
+  <class name="Cliente" abstract="true">
+    
+    <id name="Id">
+      <generator class="identity" />
+    </id>
+    
+    <property name="Nome" />
+    <property name="Endereco" />
+    <property name="Bairro" />
+    <property name="Cidade" />
+    <property name="Telefone" />
+    <property name="Celular" />
+    <property name="NomeDoResponsavel" />
+    <property name="DataCadastro" />
+    
+    <bag name="Pedidos">
+      <key column="ClienteId"/>
+      <one-to-many class="Pedido"/>
+    </bag>
+        
+    <joined-subclass name="ClienteCPF">
+      <key column="ClienteId"/>
+      <property name="CPF"/>
+    </joined-subclass>
+    
+    <joined-subclass name="ClienteCNPJ">
+      <key column="ClienteId"/>
+      <property name="CNPJ"/>
+    </joined-subclass>
+    
+  </class>
+</hibernate-mapping>
