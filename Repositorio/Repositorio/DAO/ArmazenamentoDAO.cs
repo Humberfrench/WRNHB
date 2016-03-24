@@ -5,8 +5,8 @@ using Repositorio.Entidades;
 
 namespace Repositorio.DAO
 {
-    public class UsuarioDAO : GenericDAO<Usuario>, IUsuarioDAO
+    public class ArmazenamentoDAO : GenericDAO<Armazenamento>, IArmazenamentoDAO
     {
-        public UsuarioDAO(ISession session) : base(session) { }
+        public ArmazenamentoDAO(ISession session) : base(session) { }
     }
 }

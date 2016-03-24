@@ -18,15 +18,15 @@ namespace Repositorio.Entidades
         public virtual string HoraPrevisaoEntrega { get; set; }
         public virtual string Observacao { get; set; }
         public virtual bool Situacao  { get; set; }
-        public virtual decimal Valor { get; set; }
-        public virtual bool Sinal { get; set; }
-        public virtual decimal ValorSinal { get; set; }
+
 
         public virtual Usuario Usuario { get; set; }
         public virtual Cliente Cliente { get; set; }
         public virtual OrigemDoPedido OrigemDoPedido { get; set; }
         public virtual TipoDeServico TipoDeServico { get; set; }
         public virtual Armazenamento Armazenamento { get; set; }
-        public virtual TipoDePagamento TipoDePagamento { get; set; }
+        public virtual Pagamento Pagamento { get; set; }
+
+        
     }
 }

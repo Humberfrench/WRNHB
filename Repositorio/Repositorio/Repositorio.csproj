@@ -54,12 +54,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAO\ArmazenamentoDAO.cs" />
+    <Compile Include="DAO\ClienteDAO.cs" />
+    <Compile Include="DAO\Generic\GenericDAO.cs" />
+    <Compile Include="DAO\Generic\IGenericDAO.cs" />
+    <Compile Include="DAO\Interface\IArmazenamentoDAO.cs" />
+    <Compile Include="DAO\Interface\IClienteDAO.cs" />
+    <Compile Include="DAO\Interface\IOrigemDoPedidoDAO.cs" />
+    <Compile Include="DAO\Interface\IPagamentoDAO.cs" />
+    <Compile Include="DAO\Interface\IPedidoDAO.cs" />
+    <Compile Include="DAO\Interface\ITipoDeArmazenamentoDAO.cs" />
+    <Compile Include="DAO\Interface\ITipoDePagamentoDAO.cs" />
+    <Compile Include="DAO\Interface\ITipoDeServicoDAO.cs" />
+    <Compile Include="DAO\Interface\IUsuarioDAO.cs" />
+    <Compile Include="DAO\OrigemDoPedidoDAO.cs" />
+    <Compile Include="DAO\PagamentoDAO.cs" />
+    <Compile Include="DAO\PedidoDAO.cs" />
+    <Compile Include="DAO\TipoDeArmazenamentoDAO.cs" />
+    <Compile Include="DAO\TipoDePagamentoDAO.cs" />
+    <Compile Include="DAO\TipoDeServicoDAO.cs" />
     <Compile Include="DAO\UsuarioDAO.cs" />
     <Compile Include="Entidades\Armazenamento.cs" />
     <Compile Include="Entidades\Cliente.cs" />
     <Compile Include="Entidades\ClienteCNPJ.cs" />
     <Compile Include="Entidades\ClienteCPF.cs" />
     <Compile Include="Entidades\OrigemDoPedido.cs" />
+    <Compile Include="Entidades\Pagamento.cs" />
     <Compile Include="Entidades\Pedido.cs" />
     <Compile Include="Entidades\TipoDePagamento.cs" />
     <Compile Include="Entidades\TipoDeArmazenamento.cs" />
@@ -84,6 +104,7 @@
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Mapeamento\Pagamento.hbm.xml" />
     <EmbeddedResource Include="Mapeamento\Pedido.hbm.xml" />
     <EmbeddedResource Include="Mapeamento\Armazenamento.hbm.xml" />
     <EmbeddedResource Include="Mapeamento\Cliente.hbm.xml" />

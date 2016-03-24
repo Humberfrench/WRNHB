@@ -16,17 +16,14 @@
     <property name="DataPrevisaoEntrega" />
     <property name="HoraPrevisaoEntrega" />
     <property name="Observacao" />
-    <property name="Situacao" />
-    <property name="Valor" />
-    <property name="Sinal" />
-    <property name="ValorSinal" />
+    <property name="Situacao" />   
     
     <many-to-one name="Usuario" column="UsuarioId"/>
     <many-to-one name="Cliente" column="ClienteId"/>
     <many-to-one name="OrigemDoPedido" column="OrigemDoPedidoId"/>
     <many-to-one name="TipoDeServico" column="TipoDeServicoId"/>
     <many-to-one name="Armazenamento" column="ArmazenamentoId"/>
-    <many-to-one name="TipoDePagamento" column="TipoDePagamentoId"/>
+    <one-to-one  name="Pagamento" class="Pagamento"/>
     
   </class>
 </hibernate-mapping>

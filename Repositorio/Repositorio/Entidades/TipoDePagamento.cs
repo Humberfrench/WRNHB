@@ -10,6 +10,6 @@ namespace Repositorio.Entidades
     {
         public virtual int Id { get; set; }
         public virtual string Descricao { get; set; }
-        public virtual IList<Pedido> Pedidos { get; set; }
+        public virtual IList<Pagamento> Pagamentos { get; set; }
     }
 }

@@ -3,10 +3,11 @@ using Repositorio.DAO.Generic;
 using Repositorio.DAO.Interface;
 using Repositorio.Entidades;
 
+
 namespace Repositorio.DAO
 {
-    public class UsuarioDAO : GenericDAO<Usuario>, IUsuarioDAO
+    public class OrigemDoPedidoDAO : GenericDAO<OrigemDoPedido>, IOrigemDoPedidoDAO
     {
-        public UsuarioDAO(ISession session) : base(session) { }
+        public OrigemDoPedidoDAO(ISession session) : base(session) { }
     }
 }

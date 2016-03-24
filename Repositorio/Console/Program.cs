@@ -9,35 +9,25 @@ namespace Console2
     {
         static void Main(string[] args)
         {
-            NHibernateHelper.GeraSchema();
-            /*ISession session = NHibernateHelper.AbreSession();
+            //NHibernateHelper.GeraSchema();
+            ISession session = NHibernateHelper.AbreSession();
             try
             {
-                Usuario u = new Usuario();
-                Usuario u2 = new Usuario();
-                u.Login = "";
+                Usuario u = new Usuario();                
+                u.Login = "ADM";
                 u.Senha = "1234";
                 u.Nome = "Administrador";
                 u.Gravar = true;
                 u.Alterar = true;
                 u.Deletar = true;
+                Console.WriteLine(Convert.ToInt64(u.Adiciona(session)));
 
-
-                u2.Login = "IAGO";
-                u2.Senha = "1234";
-                u2.Nome = "Administrador";
-                u2.Gravar = true;
-                u2.Alterar = true;
-                u2.Deletar = true;
-
-                u.Adiciona(session);
-                u2.Adiciona(session);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
-            session.Close();*/
+            session.Close();
             Console.Read();
             /*using (ITransaction transaction = session.BeginTransaction())
             {

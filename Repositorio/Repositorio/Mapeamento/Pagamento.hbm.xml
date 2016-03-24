@@ -2,18 +2,18 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="Repositorio"
                    namespace="Repositorio.Entidades">
-  <class name="TipoDePagamento">
-    
+  <class name="Pagamento">
+
     <id name="Id">
       <generator class="identity" />
     </id>
-    
-    <property name="Descricao" />
 
-    <bag name="Pagamentos">
-      <key column="TipoDePagamentoId"/>
-      <one-to-many class="Pagamento"/>
-    </bag>
+    <property name="Valor" />
+    <property name="Sinal" />
+    <property name="ValorSinal" />
+
+    <many-to-one name="TipoDePagamento" column="TipoDePagamentoId"/>
+    <many-to-one name="Pedido" unique="true" column="PedidoId"/>
     
   </class>
 </hibernate-mapping>
