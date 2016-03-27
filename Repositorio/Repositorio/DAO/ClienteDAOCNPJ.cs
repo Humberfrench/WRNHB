@@ -5,8 +5,8 @@ using Repositorio.Entidades;
 
 namespace Repositorio.DAO
 {
-    public class ClienteDAO : GenericDAO<Cliente>, IClienteDAO
+    public class ClienteDAOCNPJ : GenericDAO<ClienteCNPJ>, IClienteDAOCNPJ
     {
-        public ClienteDAO(ISession session) : base(session) { }
+        public ClienteDAOCNPJ(ISession session) : base(session) { }
     }
 }

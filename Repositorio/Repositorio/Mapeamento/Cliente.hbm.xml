@@ -17,18 +17,18 @@
     <property name="NomeDoResponsavel" />
     <property name="DataCadastro" />
     
-    <bag name="Pedidos">
+    <bag name="Pedidos" fetch="join">
       <key column="ClienteId"/>
       <one-to-many class="Pedido"/>
     </bag>
         
     <joined-subclass name="ClienteCPF">
-      <key column="ClienteId"/>
+      <key column="Id"/>
       <property name="CPF"/>
     </joined-subclass>
     
     <joined-subclass name="ClienteCNPJ">
-      <key column="ClienteId"/>
+      <key column="Id"/>
       <property name="CNPJ"/>
     </joined-subclass>
     

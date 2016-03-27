@@ -7,7 +7,7 @@ namespace Repositorio.DAO.Generic
         long Save(T entity);
         void Update(T entity);
         void Delete(T entity);
-        T Find(long id);
+        T Find(int id);
         IList<T> List(); 
 
     }

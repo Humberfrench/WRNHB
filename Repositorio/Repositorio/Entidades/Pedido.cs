@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NHibernate;
+using Repositorio.DAO;
+using System;
 
 namespace Repositorio.Entidades
 {
@@ -27,6 +25,20 @@ namespace Repositorio.Entidades
         public virtual Armazenamento Armazenamento { get; set; }
         public virtual Pagamento Pagamento { get; set; }
 
-        
+        public virtual long Adiciona(ISession session)
+        {
+            PedidoDAO udao = new PedidoDAO(session);
+            return udao.Save(this);
+        }
+        public virtual void Deleta(ISession session)
+        {
+            PedidoDAO udao = new PedidoDAO(session);
+            udao.Delete(this);
+        }
+        public virtual Pedido BuscaPorId(ISession session)
+        {
+            PedidoDAO udao = new PedidoDAO(session);
+            return udao.Find(Id);
+        }
     }
 }

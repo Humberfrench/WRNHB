@@ -55,11 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\ArmazenamentoDAO.cs" />
-    <Compile Include="DAO\ClienteDAO.cs" />
+    <Compile Include="DAO\ClienteDAOCNPJ.cs" />
+    <Compile Include="DAO\ClienteDAOCPF.cs" />
     <Compile Include="DAO\Generic\GenericDAO.cs" />
     <Compile Include="DAO\Generic\IGenericDAO.cs" />
     <Compile Include="DAO\Interface\IArmazenamentoDAO.cs" />
-    <Compile Include="DAO\Interface\IClienteDAO.cs" />
+    <Compile Include="DAO\Interface\IClienteDAOCPF.cs" />
+    <Compile Include="DAO\Interface\IClienteDAOCNPJ.cs" />
     <Compile Include="DAO\Interface\IOrigemDoPedidoDAO.cs" />
     <Compile Include="DAO\Interface\IPagamentoDAO.cs" />
     <Compile Include="DAO\Interface\IPedidoDAO.cs" />
@@ -86,14 +88,7 @@
     <Compile Include="Entidades\TipoDeServico.cs" />
     <Compile Include="Entidades\Usuario.cs" />
     <Compile Include="Infra\NHibernateHelper.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Views\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

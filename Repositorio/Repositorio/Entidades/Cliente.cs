@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repositorio.Entidades
 {
@@ -18,5 +15,7 @@ namespace Repositorio.Entidades
         public virtual string NomeDoResponsavel { get; set; }
         public virtual DateTime DataCadastro { get; set; }
         public virtual IList<Pedido> Pedidos { get; set; }
+
+        
     }
 }

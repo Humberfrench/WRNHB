@@ -24,7 +24,7 @@ namespace Repositorio.DAO.Generic
         {
             _session.Delete(entity);
         }
-        public T Find(long id)
+        public T Find(int id)
         {
             return _session.Get<T>(id);
         }

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using NHibernate;
+using Repositorio.DAO;
 
 namespace Repositorio.Entidades
 {
@@ -15,5 +12,20 @@ namespace Repositorio.Entidades
 
         public virtual TipoDePagamento TipoDePagamento { get; set; }
         public virtual Pedido Pedido { get; set; }
+        public virtual long Adiciona(ISession session)
+        {
+            PagamentoDAO udao = new PagamentoDAO(session);
+            return udao.Save(this);
+        }
+        public virtual void Deleta(ISession session)
+        {
+            PagamentoDAO udao = new PagamentoDAO(session);
+            udao.Delete(this);
+        }
+        public virtual Pagamento BuscaPorId(ISession session)
+        {
+            PagamentoDAO udao = new PagamentoDAO(session);            
+            return udao.Find(Id);
+        }
     }
 }

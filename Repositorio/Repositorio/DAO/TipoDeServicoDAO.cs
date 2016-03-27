@@ -6,7 +6,7 @@ using Repositorio.Entidades;
 
 namespace Repositorio.DAO
 {
-    public class TipoDeServicoDAO : GenericDAO<ITipoDeServicoDAO>, ITipoDeServicoDAO
+    public class TipoDeServicoDAO : GenericDAO<TipoDeServico>, ITipoDeServicoDAO
     {
         public TipoDeServicoDAO(ISession session) : base(session) { }
     }

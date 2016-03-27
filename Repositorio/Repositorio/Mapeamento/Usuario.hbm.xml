@@ -14,11 +14,11 @@
     <property name="Gravar" />
     <property name="Alterar" />
     <property name="Deletar" />
-
-    <bag name="Pedidos">
+    
+    <bag name="Pedidos" fetch="join">
       <key column="UsuarioId"/>
       <one-to-many class="Pedido"/>      
     </bag>
-    
+  
   </class>
 </hibernate-mapping>

@@ -6,7 +6,7 @@ using Repositorio.Entidades;
 
 namespace Repositorio.DAO
 {
-    class TipoDeArmazenamentoDAO : GenericDAO<TipoDeArmazenamento>, ITipoDeArmazenamentoDAO
+    public class TipoDeArmazenamentoDAO : GenericDAO<TipoDeArmazenamento>, ITipoDeArmazenamentoDAO
     {
         public TipoDeArmazenamentoDAO(ISession session) : base(session) { }
     }

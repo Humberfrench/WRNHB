@@ -3,7 +3,7 @@ using Repositorio.Entidades;
 
 namespace Repositorio.DAO.Interface
 {
-    public interface ITipoDePagamentoDAO : IGenericDAO<ITipoDePagamentoDAO>
+    public interface ITipoDePagamentoDAO : IGenericDAO<TipoDePagamento>
     {
     }
 }
