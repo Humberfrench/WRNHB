@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
 
@@ -34,7 +35,18 @@ namespace Repositorio.DAO.Generic
         }
         public void Delete(T entity)
         {
-            _session.Delete(entity);
+            using (ITransaction transaction = _session.BeginTransaction())
+            {
+                try
+                {
+                    _session.Delete(entity);
+                    transaction.Commit();
+                }
+                catch (HibernateException he)
+                {
+                    throw new Exception(he.InnerException.Message);
+                }
+            }
         }
         public T Find(int id)
         {

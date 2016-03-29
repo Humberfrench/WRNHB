@@ -36,22 +36,22 @@ namespace Repositorio.Entidades
 
         public virtual IList<Pedido> Pedidos{ get; set; }
 
-        public virtual int Adiciona(ISession session)
+        public virtual int Save(ISession session)
         {
             UsuarioDAO udao = new UsuarioDAO(session);
             return udao.Save(this);            
         }
-        public virtual void Atualizar(ISession session)
+        public virtual void Update(ISession session)
         {
             UsuarioDAO udao = new UsuarioDAO(session);
             udao.Update(this);
         }
-        public virtual void Deleta(ISession session)
+        public virtual void Delete(ISession session)
         {
             UsuarioDAO udao = new UsuarioDAO(session);
             udao.Delete(this);
         }
-        public virtual Usuario BuscaPorId(ISession session)
+        public virtual Usuario Find(ISession session)
         {
             UsuarioDAO udao = new UsuarioDAO(session);
             return udao.Find(Id);
@@ -70,6 +70,11 @@ namespace Repositorio.Entidades
         {
             UsuarioDAO udao = new UsuarioDAO(session);
             return udao.BuscaPorNomeDeUsuario(this);
+        }
+        public virtual IList<Usuario> BuscaOrdenado(ISession session)
+        {
+            UsuarioDAO udao = new UsuarioDAO(session);
+            return udao.BuscaOrdenado();
         }
     }
 }
