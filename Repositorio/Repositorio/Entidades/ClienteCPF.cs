@@ -6,7 +6,7 @@ namespace Repositorio.Entidades
     public class ClienteCPF : Cliente
     {
         public virtual string CPF { get; set; }
-        public virtual long Adiciona(ISession session)
+        public virtual int Adiciona(ISession session)
         {
             ClienteDAOCPF udao = new ClienteDAOCPF(session);
             return udao.Save(this);

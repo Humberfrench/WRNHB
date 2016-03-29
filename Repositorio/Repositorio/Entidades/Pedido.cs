@@ -25,7 +25,7 @@ namespace Repositorio.Entidades
         public virtual Armazenamento Armazenamento { get; set; }
         public virtual Pagamento Pagamento { get; set; }
 
-        public virtual long Adiciona(ISession session)
+        public virtual int Adiciona(ISession session)
         {
             PedidoDAO udao = new PedidoDAO(session);
             return udao.Save(this);

@@ -12,7 +12,8 @@ namespace Repositorio.Entidades
 
         public virtual TipoDePagamento TipoDePagamento { get; set; }
         public virtual Pedido Pedido { get; set; }
-        public virtual long Adiciona(ISession session)
+
+        public virtual int Adiciona(ISession session)
         {
             PagamentoDAO udao = new PagamentoDAO(session);
             return udao.Save(this);

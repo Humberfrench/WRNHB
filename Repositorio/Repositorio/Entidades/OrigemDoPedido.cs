@@ -10,7 +10,7 @@ namespace Repositorio.Entidades
         public virtual string Descricao { get; set; }
         public virtual IList<Pedido> Pedidos { get; set; }
 
-        public virtual long Adiciona(ISession session)
+        public virtual int Adiciona(ISession session)
         {
             OrigemDoPedidoDAO udao = new OrigemDoPedidoDAO(session);
             return udao.Save(this);

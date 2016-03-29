@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using System;
 using System.Collections.Generic;
 
 namespace Repositorio.DAO.Generic
@@ -12,13 +13,24 @@ namespace Repositorio.DAO.Generic
             _session = session;
         }
 
-        public long Save(T entity)
-        {
-            return (int) _session.Save(entity);
+        public int Save(T entity)
+        {            
+            return (int)_session.Save(entity);
         }
         public void Update(T entity)
-        {
-            _session.Update(entity);
+        {            
+            using (ITransaction transaction = _session.BeginTransaction())
+            {
+                try
+                {
+                    _session.Update(entity);
+                    transaction.Commit();
+                }
+                catch (HibernateException he)
+                {
+                    throw new Exception(he.InnerException.Message);
+                }
+            }            
         }
         public void Delete(T entity)
         {
@@ -26,13 +38,13 @@ namespace Repositorio.DAO.Generic
         }
         public T Find(int id)
         {
-            return _session.Get<T>(id);
+            return _session.Get<T>(id);           
         }
         public IList<T> List()
         {
             IList<T> list = _session.CreateCriteria(typeof(T)).List<T>();
             return list;
-        }        
+        }
     }
 }
 

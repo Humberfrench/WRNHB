@@ -7,7 +7,7 @@ namespace Repositorio.Entidades
     {
         public virtual string CNPJ { get; set; }
 
-        public virtual long Adiciona(ISession session)
+        public virtual int Adiciona(ISession session)
         {
             ClienteDAOCNPJ udao = new ClienteDAOCNPJ(session);
             return udao.Save(this);

@@ -1,15 +1,21 @@
 ﻿using NHibernate;
+using Repositorio.DAO;
 using Repositorio.Entidades;
 using Repositorio.Infra;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Windows.Forms;
 
 namespace Formularios
 {
     public partial class frmLogin : Form
     {
-        public Usuario u = new Usuario();
-        ISession session;
+
+        public Usuario usuario = new Usuario();
+        //public UsuarioDAO udao;
+        private ISession session;
+
         public frmLogin()
         {
             InitializeComponent();
@@ -18,20 +24,22 @@ namespace Formularios
 
         public Usuario getUsuario()
         {
-            return u;
+            return usuario;
         }
         protected void Entrar()
         {
             session = NHibernateHelper.AbreSession();
             try
             {
-                if (ValidarCampos())
+                usuario = ValidarCampos();
+                if (usuario == null)
                     return;
 
-                u.Login = txtLogin.Text.ToUpper();
-                u.Senha = txtSenha.Text;
-                u = u.Valido(session);
-                if (u != null)
+                //udao = new UsuarioDAO(session);
+                //usuario = udao.Valido(usuario);
+                usuario = usuario.Valido(session);
+
+                if (usuario != null)
                 {
                     //u = udao.consultarPorLogin(txtLogin.Text);
                     Dispose();
@@ -42,18 +50,17 @@ namespace Formularios
                     MessageBox.Show("Usuario e/ou senha incorreta ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     limparCampos();
                     txtLogin.Focus();
-                }
-                session.Close();
+                }                
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error: " + e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                session.Close();
+                MessageBox.Show("Error: " + e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
+            session.Close();
         }
-        protected bool ValidarCampos()
+        protected Usuario ValidarCampos()
         {
-            if (txtLogin.Text == "")
+            /*if (txtLogin.Text == "")
             {
                 MessageBox.Show("Campo Login nao pode ser vazio.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
@@ -63,13 +70,47 @@ namespace Formularios
                 MessageBox.Show("Campo Senha não pode ser vazio.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
-            return false;
+            return false;*/
+            //string erros = null;
+            Usuario u = new Usuario { Login = txtLogin.Text.ToUpper(), Senha = txtSenha.Text, Nome = "a", Gravar = false, Alterar = false, Deletar = false };
+
+            ValidationContext context = new ValidationContext(u, null, null);
+            IList<ValidationResult> errors = new List<ValidationResult>();
+
+            if (!Validator.TryValidateObject(u, context, errors, true))
+            {
+                foreach (var erro in errors)
+                {
+                    MessageBox.Show(erro.ErrorMessage, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    var a = erro.MemberNames.GetEnumerator();
+                    a.MoveNext();
+
+                    switch (a.Current)
+                    {
+                        case "Login":
+                            txtLogin.Focus();
+                            break;
+                        case "Senha":
+                            txtSenha.Focus();
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                    //erros += erro.ErrorMessage + "\n";
+                }
+                //MessageBox.Show(erros, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            else
+                return u;
         }
         protected void limparCampos()
         {
             txtLogin.Text = "";
             txtSenha.Text = "";
-            u = null;
+            usuario = null;
         }
 
         private void btEntrar_Click(object sender, EventArgs e)

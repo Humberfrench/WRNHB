@@ -11,7 +11,7 @@ namespace Repositorio.Entidades
         public virtual TipoDeArmazenamento TipoDeArmazenamento { get; set; }
         public virtual IList<Pedido> Pedidos { get; set; }
 
-        public virtual long Adiciona(ISession session)
+        public virtual int Adiciona(ISession session)
         {
             ArmazenamentoDAO udao = new ArmazenamentoDAO(session);
             return udao.Save(this);
