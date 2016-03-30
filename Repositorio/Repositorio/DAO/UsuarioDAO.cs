@@ -4,7 +4,6 @@ using Repositorio.DAO.Generic;
 using Repositorio.DAO.Interface;
 using Repositorio.Entidades;
 using System.Collections.Generic;
-using System;
 
 namespace Repositorio.DAO
 {
@@ -30,14 +29,7 @@ namespace Repositorio.DAO
             {
                 criteria.Add(Restrictions.InsensitiveLike("Nome",u.Nome, MatchMode.Anywhere));
             }
-            criteria.AddOrder(Order.Desc("Id"));
             return criteria.List<Usuario>();
-        }
-
-        public IList<Usuario> BuscaOrdenado()
-        {
-            IList<Usuario> list = _session.CreateCriteria(typeof(Usuario)).AddOrder(Order.Asc("Id")).List<Usuario>();
-            return list;            
         }
     }
 }

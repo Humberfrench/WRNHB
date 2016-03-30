@@ -11,35 +11,34 @@ namespace Console2
         {
             //NHibernateHelper.GeraSchema();
             ISession session = NHibernateHelper.AbreSession();
-            /*
+            
             try
             {
                 Usuario u = new Usuario();
-                u.Id = 7;
+                u.Id = 18;
                 u.Login = "AAA3";
                 u.Senha = "1234";
                 u.Nome = "testemudei";
                 u.Gravar = true;
                 u.Alterar = true;
                 u.Deletar = true;
-
-                u.Delete(session);
+                u.Atualizar(session);
 
                 /*
                 Usuario u = new Usuario();
                 u.Id = 3;
                 u = u.BuscaPorId(session);
 
-                Console.WriteLine(u.Nome);
+                Console.WriteLine(u.Nome);*/
 
                 Console.Read();
 
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.InnerException.Message);
             }
-            */
+            /*
             using (ITransaction transaction = session.BeginTransaction())
             {
                 try
@@ -107,15 +106,15 @@ namespace Console2
                     p.TipoDePagamento = tp;
                     p.Pedido = pe;                    
 
-                    Console.WriteLine(u.Save(session));
-                    Console.WriteLine(c.Adiciona(session));
-                    Console.WriteLine(o.Adiciona(session));
-                    Console.WriteLine(tp.Adiciona(session));
-                    Console.WriteLine(ta.Adiciona(session));
-                    Console.WriteLine(a.Adiciona(session));
-                    Console.WriteLine(pe.Adiciona(session));
-                    Console.WriteLine(p.Adiciona(session));
-                    Console.WriteLine(ts.Adiciona(session));
+                    Console.WriteLine(u.Adiciona(session));
+                    //Console.WriteLine(Convert.ToInt64(c.Adiciona(session)));
+                    //Console.WriteLine(Convert.ToInt64(o.Adiciona(session)));
+                    //Console.WriteLine(Convert.ToInt64(tp.Adiciona(session)));
+                    //Console.WriteLine(Convert.ToInt64(ta.Adiciona(session)));
+                    //Console.WriteLine(Convert.ToInt64(a.Adiciona(session)));
+                    //Console.WriteLine(Convert.ToInt64(pe.Adiciona(session)));
+                    //Console.WriteLine(Convert.ToInt64(p.Adiciona(session)));
+                    //Console.WriteLine(Convert.ToInt64(ts.Adiciona(session)));
 
 
                     transaction.Commit();
@@ -125,7 +124,8 @@ namespace Console2
                     transaction.Rollback();
                     Console.WriteLine(ex.Message);
                 }
-            }            
+            }
+            */
 
             session.Close();
             Console.Read();
