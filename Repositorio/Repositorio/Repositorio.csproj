@@ -56,13 +56,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DAO\ArmazenamentoDAO.cs" />
+    <Compile Include="DAO\ClienteDAO.cs" />
     <Compile Include="DAO\ClienteDAOCNPJ.cs" />
-    <Compile Include="DAO\ClienteDAOCPF.cs" />
     <Compile Include="DAO\Generic\GenericDAO.cs" />
     <Compile Include="DAO\Generic\IGenericDAO.cs" />
+    <Compile Include="DAO\ClienteDAOCPF.cs" />
     <Compile Include="DAO\Interface\IArmazenamentoDAO.cs" />
-    <Compile Include="DAO\Interface\IClienteDAOCPF.cs" />
+    <Compile Include="DAO\Interface\IClienteDAO.cs" />
     <Compile Include="DAO\Interface\IClienteDAOCNPJ.cs" />
+    <Compile Include="DAO\Interface\IClienteDAOCPF.cs" />
     <Compile Include="DAO\Interface\IOrigemDoPedidoDAO.cs" />
     <Compile Include="DAO\Interface\IPagamentoDAO.cs" />
     <Compile Include="DAO\Interface\IPedidoDAO.cs" />
@@ -100,6 +102,7 @@
     <Content Include="hibernate.cfg.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Mapeamento\Cliente.hbm - Copy.xml" />
     <EmbeddedResource Include="Mapeamento\Pagamento.hbm.xml" />
     <EmbeddedResource Include="Mapeamento\Pedido.hbm.xml" />
     <EmbeddedResource Include="Mapeamento\Armazenamento.hbm.xml" />

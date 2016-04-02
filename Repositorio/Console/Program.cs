@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using Repositorio.DAO;
 using Repositorio.Entidades;
 using Repositorio.Infra;
 using System;
@@ -9,28 +10,36 @@ namespace Console2
     {
         static void Main(string[] args)
         {
-            //NHibernateHelper.GeraSchema();
-            ISession session = NHibernateHelper.AbreSession();
-            
+            NHibernateHelper.GeraSchema();
+            ISession session = NHibernateHelper.AbreSession();            
             try
             {
                 Usuario u = new Usuario();
-                u.Id = 18;
-                u.Login = "AAA3";
+                /*u.Login = "AAA2";
                 u.Senha = "1234";
-                u.Nome = "testemudei";
+                u.Nome = "Administrador";
                 u.Gravar = true;
                 u.Alterar = true;
                 u.Deletar = true;
-                u.Atualizar(session);
+                u.Save(session);*/
 
-                /*
-                Usuario u = new Usuario();
-                u.Id = 3;
-                u = u.BuscaPorId(session);
+                ClienteCPF c = new ClienteCPF();
+                c.Nome = "TESTE";
+                c.Endereco = "TESTE";
+                c.Bairro = "TESTE";
+                c.Cidade = "TESTE";
+                c.Telefone = "123456";
+                c.Celular = "123456";
+                c.Nome = "TESTE";
+                c.DataCadastro = DateTime.Now;
+                c.CPF = "123456";
 
-                Console.WriteLine(u.Nome);*/
+                c.Save(session);
+                ClienteDAO dao = new ClienteDAO(session);
 
+                var c2 = dao.Find(1);
+                string a = c2.ToString();
+                Console.WriteLine(a);
                 Console.Read();
 
             }

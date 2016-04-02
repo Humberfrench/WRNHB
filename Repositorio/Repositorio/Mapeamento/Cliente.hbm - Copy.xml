@@ -9,7 +9,6 @@
     </id>
 
     <property name="Nome" />
-    <property name="Documento" />
     <property name="Endereco" />
     <property name="Bairro" />
     <property name="Cidade" />
@@ -22,6 +21,16 @@
       <key column="ClienteId"/>
       <one-to-many class="Pedido"/>
     </bag>
+
+    <joined-subclass name="ClienteCPF">
+      <key column="Id"/>
+      <property name="CPF"/>
+    </joined-subclass>
+
+    <joined-subclass name="ClienteCNPJ">
+      <key column="Id"/>
+      <property name="CNPJ"/>
+    </joined-subclass>
 
   </class>
 </hibernate-mapping>

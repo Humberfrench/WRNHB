@@ -55,7 +55,7 @@ namespace Formularios
             {                              
                 try
                 {                                       
-                    int retorno = usuario.Adiciona(session);
+                    int retorno = usuario.Save(session);
                     MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Nome: " + usuario.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
                 }
                 catch (Exception ex)
@@ -67,7 +67,7 @@ namespace Formularios
             {
                 try
                 {
-                    usuario.Atualizar(session);
+                    usuario.Update(session);
                     MessageBox.Show("Alterado com sucesso:\nCodigo: (" + usuario.Id + ") Nome: " + usuario.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
@@ -84,32 +84,47 @@ namespace Formularios
         }
         private void btnDeletar_Click(object sender, EventArgs e)
         {
-            /*
+            session = NHibernateHelper.AbreSession();
+
             if (dtgUsuario.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Nenhum Usuario selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var Selecionado = (dtgUsuario.SelectedRows[0].DataBoundItem as Usuario);
-            DialogResult resultado = MessageBox.Show("Deseja deletar o Usuario - " + Selecionado.nome + "?", "Pergunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var id = (int)dtgUsuario.CurrentRow.Cells["idUsuario"].Value;
+            usuario.Id = id;
+            var Selecionado = usuario.Find(session);
+
+            DialogResult resultado = MessageBox.Show("Deseja deletar o Usuario - " + Selecionado.Nome + "?", "Pergunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (resultado == DialogResult.No)
             {
                 return;
             }
-
-            string retorno = udao.excluir(Selecionado);
             try
             {
-                int idUsuario = Convert.ToInt32(retorno);
-                MessageBox.Show("Exclido com sucesso", "Pergunta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                atualizaGrade(false);
+                if (Selecionado.Pedidos.Count < 0)
+                {
+                    Selecionado.Delete(session);
+                    MessageBox.Show("Exclido com sucesso", "Pergunta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    string pedidos = null;
+                    foreach (var pedido in Selecionado.Pedidos)
+                    {
+                        pedidos += Convert.ToString(pedido.Id) + " Data: " + pedido.DataPedido.ToShortDateString() + " Cliente: " + pedido.Cliente.Nome + "\n";
+                    }
+                    MessageBox.Show("Não foi possivel excluir. Usuario Contem esses Pedidos:\n" + pedidos, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Não foi possivel excluir. Detalhes :" + retorno, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }*/
+                MessageBox.Show("Não foi possivel excluir. Detalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            session.Close();
+            atualizaGrade(false);
         }
         private void btnProcurar_Click(object sender, EventArgs e)
         {
@@ -131,7 +146,8 @@ namespace Formularios
         }
         private void dtgUsuario_DoubleClick_1(object sender, EventArgs e)
         {
-            /*
+            session = NHibernateHelper.AbreSession();
+
             if (dtgUsuario.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Nenhum Usuario selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -139,30 +155,16 @@ namespace Formularios
             }
             limparCampos(false);
 
-            var Selecionado = (dtgUsuario.SelectedRows[0].DataBoundItem as Usuario);
-            txtCodigo.Text = Convert.ToString(Selecionado.idUsuario);
-            txtLogin.Text = Selecionado.login;
-            txtSenha.Text = Selecionado.senha;
-            txtNome.Text = Selecionado.nome;
-            if (Selecionado.grava == true)
-                cboGrava.SelectedIndex = 1;
-            else
-                cboGrava.SelectedIndex = 2;
+            var id = (int)dtgUsuario.CurrentRow.Cells["idUsuario"].Value;
+            usuario.Id = id;
+            var Selecionado = usuario.Find(session);
 
-            if (Selecionado.altera == true)
-                cboAltera.SelectedIndex = 1;
-            else
-                cboAltera.SelectedIndex = 2;
-
-            if (Selecionado.deleta == true)
-                cboDeleta.SelectedIndex = 1;
-            else
-                cboDeleta.SelectedIndex = 2;
-            alte = true;
+            setParametrosUsuario(Selecionado);
 
             tbcCliente.SelectedIndex = 0;
             txtLogin.Focus();
-            */
+
+            session.Close();
         }
         private void tbcCliente_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -181,9 +183,9 @@ namespace Formularios
         private void setParametrosUsuario(Usuario u)
         {
             // RECEBE UM USUARIO E COLOCA AS PROPRIEDADES DELE NO FORME
-            txtLogin.Text = u.Login;
+            txtLogin.Text = u.Login.ToUpper();
             txtSenha.Text = u.Senha;
-            txtNome.Text = u.Nome;
+            txtNome.Text = u.Nome.ToUpper();
             if (u.Gravar == true)
                 rbGravarSim.Checked = true;
             else
@@ -316,9 +318,9 @@ namespace Formularios
             {
                 if (validarCampoCodigo())
                     return;
-                Convert.ToInt32(txtCodigo.Text);
+                //Convert.ToInt32(txtCodigo.Text);
                 usuario.Id = Convert.ToInt32(txtCodigo.Text);
-                var Selecionado = usuario.BuscaPorId(session);
+                var Selecionado = usuario.Find(session);
                 if (Selecionado == null)
                 {
                     MessageBox.Show("Nenhum cadastro de usuario com esse codigo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
