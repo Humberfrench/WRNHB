@@ -15,15 +15,15 @@ namespace Console2
             try
             {
                 Usuario u = new Usuario();
-                /*u.Login = "AAA2";
+                u.Login = "ADM";
                 u.Senha = "1234";
                 u.Nome = "Administrador";
                 u.Gravar = true;
                 u.Alterar = true;
                 u.Deletar = true;
-                u.Save(session);*/
+                u.Save(session);
 
-                ClienteCPF c = new ClienteCPF();
+                Cliente c = new Cliente();
                 c.Nome = "TESTE";
                 c.Endereco = "TESTE";
                 c.Bairro = "TESTE";
@@ -32,14 +32,10 @@ namespace Console2
                 c.Celular = "123456";
                 c.Nome = "TESTE";
                 c.DataCadastro = DateTime.Now;
-                c.CPF = "123456";
+                c.Documento = "123456";
 
                 c.Save(session);
-                ClienteDAO dao = new ClienteDAO(session);
-
-                var c2 = dao.Find(1);
-                string a = c2.ToString();
-                Console.WriteLine(a);
+                                
                 Console.Read();
 
             }

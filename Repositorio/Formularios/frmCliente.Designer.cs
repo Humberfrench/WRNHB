@@ -29,16 +29,23 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.btnNovo = new System.Windows.Forms.ToolStripButton();
             this.side1 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnEditar = new System.Windows.Forms.ToolStripButton();
             this.side2 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnDeletar = new System.Windows.Forms.ToolStripButton();
             this.side3 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnCancelar = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.btnFechar = new System.Windows.Forms.ToolStripButton();
             this.tbcCliente = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtCelular = new System.Windows.Forms.MaskedTextBox();
+            this.txtTelefone = new System.Windows.Forms.MaskedTextBox();
             this.txtResponsavel = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -60,7 +67,12 @@
             this.label12 = new System.Windows.Forms.Label();
             this.txtPesquisar = new System.Windows.Forms.TextBox();
             this.dtgCliente = new System.Windows.Forms.DataGridView();
-            this.idCliente = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.Label2 = new System.Windows.Forms.Label();
+            this.Label4 = new System.Windows.Forms.Label();
+            this.Panel2 = new System.Windows.Forms.Panel();
+            this.PictureBox2 = new System.Windows.Forms.PictureBox();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cpjCnpj = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.endereco = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,18 +82,6 @@
             this.telefoneCelular = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.responsavel = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataCadastro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.Label2 = new System.Windows.Forms.Label();
-            this.Label4 = new System.Windows.Forms.Label();
-            this.Panel2 = new System.Windows.Forms.Panel();
-            this.PictureBox2 = new System.Windows.Forms.PictureBox();
-            this.btnNovo = new System.Windows.Forms.ToolStripButton();
-            this.btnEditar = new System.Windows.Forms.ToolStripButton();
-            this.btnDeletar = new System.Windows.Forms.ToolStripButton();
-            this.btnCancelar = new System.Windows.Forms.ToolStripButton();
-            this.btnFechar = new System.Windows.Forms.ToolStripButton();
-            this.txtTelefone = new System.Windows.Forms.MaskedTextBox();
-            this.txtCelular = new System.Windows.Forms.MaskedTextBox();
             this.toolStrip1.SuspendLayout();
             this.tbcCliente.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -111,25 +111,71 @@
             this.toolStrip1.TabIndex = 37;
             this.toolStrip1.Text = "toolStrip1";
             // 
+            // btnNovo
+            // 
+            this.btnNovo.Image = global::Formularios.Properties.Resources.novoregistro;
+            this.btnNovo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnNovo.Name = "btnNovo";
+            this.btnNovo.Size = new System.Drawing.Size(64, 28);
+            this.btnNovo.Text = "&Novo";
+            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+            // 
             // side1
             // 
             this.side1.Name = "side1";
             this.side1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // btnEditar
+            // 
+            this.btnEditar.Image = global::Formularios.Properties.Resources.editar;
+            this.btnEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnEditar.Name = "btnEditar";
+            this.btnEditar.Size = new System.Drawing.Size(101, 28);
+            this.btnEditar.Text = "&Salvar/Editar";
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // side2
             // 
             this.side2.Name = "side2";
             this.side2.Size = new System.Drawing.Size(6, 31);
             // 
+            // btnDeletar
+            // 
+            this.btnDeletar.Image = global::Formularios.Properties.Resources.excluir;
+            this.btnDeletar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnDeletar.Name = "btnDeletar";
+            this.btnDeletar.Size = new System.Drawing.Size(72, 28);
+            this.btnDeletar.Text = "&Deletar";
+            this.btnDeletar.ToolTipText = "Delete";
+            this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
+            // 
             // side3
             // 
             this.side3.Name = "side3";
             this.side3.Size = new System.Drawing.Size(6, 31);
             // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Image = global::Formularios.Properties.Resources.cancelar;
+            this.btnCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(81, 28);
+            this.btnCancelar.Text = "&Cancelar";
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
             this.toolStripSeparator7.Size = new System.Drawing.Size(6, 31);
+            // 
+            // btnFechar
+            // 
+            this.btnFechar.Image = global::Formularios.Properties.Resources.fechar;
+            this.btnFechar.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.btnFechar.Name = "btnFechar";
+            this.btnFechar.Size = new System.Drawing.Size(70, 28);
+            this.btnFechar.Text = "&Fechar";
+            this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
             // 
             // tbcCliente
             // 
@@ -187,6 +233,22 @@
             this.groupBox2.Size = new System.Drawing.Size(695, 245);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
+            // 
+            // txtCelular
+            // 
+            this.txtCelular.Location = new System.Drawing.Point(23, 194);
+            this.txtCelular.Mask = "(99)00000-0000";
+            this.txtCelular.Name = "txtCelular";
+            this.txtCelular.Size = new System.Drawing.Size(143, 20);
+            this.txtCelular.TabIndex = 59;
+            // 
+            // txtTelefone
+            // 
+            this.txtTelefone.Location = new System.Drawing.Point(23, 153);
+            this.txtTelefone.Mask = "(99)0000-0000";
+            this.txtTelefone.Name = "txtTelefone";
+            this.txtTelefone.Size = new System.Drawing.Size(143, 20);
+            this.txtTelefone.TabIndex = 58;
             // 
             // txtResponsavel
             // 
@@ -388,7 +450,7 @@
             this.dtgCliente.ColumnHeadersHeight = 21;
             this.dtgCliente.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dtgCliente.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.idCliente,
+            this.id,
             this.nome,
             this.cpjCnpj,
             this.endereco,
@@ -406,90 +468,6 @@
             this.dtgCliente.Size = new System.Drawing.Size(693, 219);
             this.dtgCliente.TabIndex = 1;
             this.dtgCliente.DoubleClick += new System.EventHandler(this.dtgCliente_DoubleClick);
-            // 
-            // idCliente
-            // 
-            this.idCliente.DataPropertyName = "idCliente";
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.idCliente.DefaultCellStyle = dataGridViewCellStyle3;
-            this.idCliente.HeaderText = "Codigo";
-            this.idCliente.Name = "idCliente";
-            this.idCliente.ReadOnly = true;
-            this.idCliente.Width = 50;
-            // 
-            // nome
-            // 
-            this.nome.DataPropertyName = "nome";
-            this.nome.HeaderText = "Nome";
-            this.nome.Name = "nome";
-            this.nome.ReadOnly = true;
-            this.nome.Width = 150;
-            // 
-            // cpjCnpj
-            // 
-            this.cpjCnpj.DataPropertyName = "cpfCnpj";
-            this.cpjCnpj.HeaderText = "Cpf/Cnpj";
-            this.cpjCnpj.Name = "cpjCnpj";
-            this.cpjCnpj.ReadOnly = true;
-            this.cpjCnpj.Width = 80;
-            // 
-            // endereco
-            // 
-            this.endereco.DataPropertyName = "endereco";
-            this.endereco.HeaderText = "Endereco";
-            this.endereco.Name = "endereco";
-            this.endereco.ReadOnly = true;
-            this.endereco.Width = 150;
-            // 
-            // bairro
-            // 
-            this.bairro.DataPropertyName = "bairro";
-            this.bairro.HeaderText = "Bairro";
-            this.bairro.Name = "bairro";
-            this.bairro.ReadOnly = true;
-            // 
-            // cidade
-            // 
-            this.cidade.DataPropertyName = "cidade";
-            this.cidade.HeaderText = "Cidade";
-            this.cidade.Name = "cidade";
-            this.cidade.ReadOnly = true;
-            this.cidade.Width = 75;
-            // 
-            // telefone
-            // 
-            this.telefone.DataPropertyName = "telefone";
-            this.telefone.HeaderText = "Telefone";
-            this.telefone.Name = "telefone";
-            this.telefone.ReadOnly = true;
-            this.telefone.Width = 80;
-            // 
-            // telefoneCelular
-            // 
-            this.telefoneCelular.DataPropertyName = "telefoneCelular";
-            this.telefoneCelular.HeaderText = "Celular";
-            this.telefoneCelular.Name = "telefoneCelular";
-            this.telefoneCelular.ReadOnly = true;
-            this.telefoneCelular.Width = 80;
-            // 
-            // responsavel
-            // 
-            this.responsavel.DataPropertyName = "responsavel";
-            this.responsavel.HeaderText = "Responsavel";
-            this.responsavel.Name = "responsavel";
-            this.responsavel.ReadOnly = true;
-            this.responsavel.Width = 150;
-            // 
-            // dataCadastro
-            // 
-            this.dataCadastro.DataPropertyName = "datacadastro";
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.Format = "dd/MM/yyyy";
-            this.dataCadastro.DefaultCellStyle = dataGridViewCellStyle4;
-            this.dataCadastro.HeaderText = "Data de Cadastro";
-            this.dataCadastro.Name = "dataCadastro";
-            this.dataCadastro.ReadOnly = true;
-            this.dataCadastro.Width = 90;
             // 
             // imageList1
             // 
@@ -541,67 +519,89 @@
             this.PictureBox2.TabIndex = 6;
             this.PictureBox2.TabStop = false;
             // 
-            // btnNovo
+            // id
             // 
-            this.btnNovo.Image = global::Formularios.Properties.Resources.novoregistro;
-            this.btnNovo.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnNovo.Name = "btnNovo";
-            this.btnNovo.Size = new System.Drawing.Size(64, 28);
-            this.btnNovo.Text = "&Novo";
-            this.btnNovo.Click += new System.EventHandler(this.btnNovo_Click);
+            this.id.DataPropertyName = "Id";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.id.DefaultCellStyle = dataGridViewCellStyle1;
+            this.id.HeaderText = "Codigo";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Width = 50;
             // 
-            // btnEditar
+            // nome
             // 
-            this.btnEditar.Image = global::Formularios.Properties.Resources.editar;
-            this.btnEditar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnEditar.Name = "btnEditar";
-            this.btnEditar.Size = new System.Drawing.Size(101, 28);
-            this.btnEditar.Text = "&Salvar/Editar";
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
+            this.nome.DataPropertyName = "Nome";
+            this.nome.HeaderText = "Nome";
+            this.nome.Name = "nome";
+            this.nome.ReadOnly = true;
+            this.nome.Width = 150;
             // 
-            // btnDeletar
+            // cpjCnpj
             // 
-            this.btnDeletar.Image = global::Formularios.Properties.Resources.excluir;
-            this.btnDeletar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnDeletar.Name = "btnDeletar";
-            this.btnDeletar.Size = new System.Drawing.Size(72, 28);
-            this.btnDeletar.Text = "&Deletar";
-            this.btnDeletar.ToolTipText = "Delete";
-            this.btnDeletar.Click += new System.EventHandler(this.btnDeletar_Click);
+            this.cpjCnpj.DataPropertyName = "Documento";
+            this.cpjCnpj.HeaderText = "Cpf/Cnpj";
+            this.cpjCnpj.Name = "cpjCnpj";
+            this.cpjCnpj.ReadOnly = true;
+            this.cpjCnpj.Width = 80;
             // 
-            // btnCancelar
+            // endereco
             // 
-            this.btnCancelar.Image = global::Formularios.Properties.Resources.cancelar;
-            this.btnCancelar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnCancelar.Name = "btnCancelar";
-            this.btnCancelar.Size = new System.Drawing.Size(81, 28);
-            this.btnCancelar.Text = "&Cancelar";
-            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
+            this.endereco.DataPropertyName = "Endereco";
+            this.endereco.HeaderText = "Endereco";
+            this.endereco.Name = "endereco";
+            this.endereco.ReadOnly = true;
+            this.endereco.Width = 150;
             // 
-            // btnFechar
+            // bairro
             // 
-            this.btnFechar.Image = global::Formularios.Properties.Resources.fechar;
-            this.btnFechar.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.btnFechar.Name = "btnFechar";
-            this.btnFechar.Size = new System.Drawing.Size(70, 28);
-            this.btnFechar.Text = "&Fechar";
-            this.btnFechar.Click += new System.EventHandler(this.btnFechar_Click);
+            this.bairro.DataPropertyName = "Bairro";
+            this.bairro.HeaderText = "Bairro";
+            this.bairro.Name = "bairro";
+            this.bairro.ReadOnly = true;
             // 
-            // txtTelefone
+            // cidade
             // 
-            this.txtTelefone.Location = new System.Drawing.Point(23, 153);
-            this.txtTelefone.Mask = "(99)0000-0000";
-            this.txtTelefone.Name = "txtTelefone";
-            this.txtTelefone.Size = new System.Drawing.Size(143, 20);
-            this.txtTelefone.TabIndex = 58;
+            this.cidade.DataPropertyName = "Cidade";
+            this.cidade.HeaderText = "Cidade";
+            this.cidade.Name = "cidade";
+            this.cidade.ReadOnly = true;
+            this.cidade.Width = 75;
             // 
-            // txtCelular
+            // telefone
             // 
-            this.txtCelular.Location = new System.Drawing.Point(23, 194);
-            this.txtCelular.Mask = "(99)00000-0000";
-            this.txtCelular.Name = "txtCelular";
-            this.txtCelular.Size = new System.Drawing.Size(143, 20);
-            this.txtCelular.TabIndex = 59;
+            this.telefone.DataPropertyName = "Telefone";
+            this.telefone.HeaderText = "Telefone";
+            this.telefone.Name = "telefone";
+            this.telefone.ReadOnly = true;
+            this.telefone.Width = 80;
+            // 
+            // telefoneCelular
+            // 
+            this.telefoneCelular.DataPropertyName = "Celular";
+            this.telefoneCelular.HeaderText = "Celular";
+            this.telefoneCelular.Name = "telefoneCelular";
+            this.telefoneCelular.ReadOnly = true;
+            this.telefoneCelular.Width = 80;
+            // 
+            // responsavel
+            // 
+            this.responsavel.DataPropertyName = "Responsavel";
+            this.responsavel.HeaderText = "Responsavel";
+            this.responsavel.Name = "responsavel";
+            this.responsavel.ReadOnly = true;
+            this.responsavel.Width = 150;
+            // 
+            // dataCadastro
+            // 
+            this.dataCadastro.DataPropertyName = "DataCadastro";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.Format = "dd/MM/yyyy";
+            this.dataCadastro.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataCadastro.HeaderText = "Data de Cadastro";
+            this.dataCadastro.Name = "dataCadastro";
+            this.dataCadastro.ReadOnly = true;
+            this.dataCadastro.Width = 90;
             // 
             // frmCliente
             // 
@@ -676,7 +676,9 @@
         private System.Windows.Forms.Label label12;
         internal System.Windows.Forms.Button btnProcurar;
         private System.Windows.Forms.DataGridView dtgCliente;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idCliente;
+        private System.Windows.Forms.MaskedTextBox txtCelular;
+        private System.Windows.Forms.MaskedTextBox txtTelefone;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn nome;
         private System.Windows.Forms.DataGridViewTextBoxColumn cpjCnpj;
         private System.Windows.Forms.DataGridViewTextBoxColumn endereco;
@@ -686,7 +688,5 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn telefoneCelular;
         private System.Windows.Forms.DataGridViewTextBoxColumn responsavel;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataCadastro;
-        private System.Windows.Forms.MaskedTextBox txtCelular;
-        private System.Windows.Forms.MaskedTextBox txtTelefone;
     }
 }

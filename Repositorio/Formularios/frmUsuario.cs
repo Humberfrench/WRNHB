@@ -56,7 +56,8 @@ namespace Formularios
                 try
                 {                                       
                     int retorno = usuario.Save(session);
-                    MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Nome: " + usuario.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
+                    MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Nome: " + usuario.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    atualizaGrade(false);
                 }
                 catch (Exception ex)
                 {
@@ -69,6 +70,7 @@ namespace Formularios
                 {
                     usuario.Update(session);
                     MessageBox.Show("Alterado com sucesso:\nCodigo: (" + usuario.Id + ") Nome: " + usuario.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    atualizaGrade(false);
                 }
                 catch (Exception ex)
                 {
@@ -92,7 +94,7 @@ namespace Formularios
                 return;
             }
 
-            var id = (int)dtgUsuario.CurrentRow.Cells["idUsuario"].Value;
+            var id = (int)dtgUsuario.CurrentRow.Cells["id"].Value;
             usuario.Id = id;
             var Selecionado = usuario.Find(session);
 
@@ -102,6 +104,7 @@ namespace Formularios
             {
                 return;
             }
+
             try
             {
                 if (Selecionado.Pedidos.Count < 0)
@@ -111,12 +114,12 @@ namespace Formularios
                 }
                 else
                 {
-                    string pedidos = null;
+                    /*string pedidos = null;
                     foreach (var pedido in Selecionado.Pedidos)
                     {
                         pedidos += Convert.ToString(pedido.Id) + " Data: " + pedido.DataPedido.ToShortDateString() + " Cliente: " + pedido.Cliente.Nome + "\n";
-                    }
-                    MessageBox.Show("Não foi possivel excluir. Usuario Contem esses Pedidos:\n" + pedidos, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }*/
+                    MessageBox.Show("Não foi possivel excluir. Usuario Contem Pedidos:\nQuantidade - " + Selecionado.Pedidos.Count, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
@@ -155,11 +158,11 @@ namespace Formularios
             }
             limparCampos(false);
 
-            var id = (int)dtgUsuario.CurrentRow.Cells["idUsuario"].Value;
+            var id = (int)dtgUsuario.CurrentRow.Cells["id"].Value;
             usuario.Id = id;
             var Selecionado = usuario.Find(session);
 
-            setParametrosUsuario(Selecionado);
+            setParametrosForm(Selecionado);
 
             tbcCliente.SelectedIndex = 0;
             txtLogin.Focus();
@@ -180,7 +183,7 @@ namespace Formularios
         #endregion
 
         #region METODOS
-        private void setParametrosUsuario(Usuario u)
+        private void setParametrosForm(Usuario u)
         {
             // RECEBE UM USUARIO E COLOCA AS PROPRIEDADES DELE NO FORME
             txtLogin.Text = u.Login.ToUpper();
@@ -328,7 +331,7 @@ namespace Formularios
                 }
                 else
                 {
-                    setParametrosUsuario(Selecionado);
+                    setParametrosForm(Selecionado);
                 }
             }
             catch (FormatException)

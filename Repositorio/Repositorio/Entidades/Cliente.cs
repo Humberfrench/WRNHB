@@ -16,7 +16,7 @@ namespace Repositorio.Entidades
         public virtual string Nome { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Campo Documento é Necessario!")]
-        [StringLength(18, MinimumLength = 3, ErrorMessage = "Nome Documento conter no minimo de 11 caracteres sem mascara e 18 com mascara")]
+        [StringLength(18, MinimumLength = 11, ErrorMessage = "Nome Documento conter no minimo de 11 caracteres sem mascara e 18 com mascara")]
         public virtual string Documento { get; set; }
     
         public virtual string Endereco { get; set; }
@@ -60,6 +60,11 @@ namespace Repositorio.Entidades
         {
             ClienteDAO udao = new ClienteDAO(session);
             return udao.List();
+        }
+        public virtual IList<Cliente> BuscaPorNomeDeCliente(ISession session)
+        {
+            ClienteDAO udao = new ClienteDAO(session);
+            return udao.BuscaPorNomeDeCliente(this);
         }
     }
 }

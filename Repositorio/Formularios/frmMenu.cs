@@ -113,13 +113,13 @@ namespace Formularios
 
         private void tiposDeServicoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /* Hide();
+             Hide();
              frmTiposervico frmtiposervico = new frmTiposervico(u);
              DialogResult dialog = frmtiposervico.ShowDialog();
              if (dialog == DialogResult.Yes || dialog == DialogResult.No)
              {
                  Show();
-             }*/
+             }
         }
         private void administradorToolStripMenuItem_Click(object sender, EventArgs e)
         {

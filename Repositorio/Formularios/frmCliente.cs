@@ -4,23 +4,25 @@ using Repositorio.Infra;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace Formularios
 {
     public partial class frmCliente : Form
     {
-        private Cliente cliente;
+
+        private Cliente cliente = new Cliente();
         private Usuario u = new Usuario();
         private ISession session;
         private bool alte = false;
+
         public frmCliente(Usuario u)
         {
             InitializeComponent();
             this.u = u;
             dtgCliente.AutoGenerateColumns = false;
         }
+
         #region EVENTOS
         private void frmCliente_Load(object sender, EventArgs e)
         {
@@ -44,70 +46,87 @@ namespace Formularios
         }
         private void btnEditar_Click(object sender, EventArgs e)
         {
-            var c = new Cliente();
+            session = NHibernateHelper.AbreSession();
+
             if (validarCampoCodigo())
                 return;
-            if (validarCamposObrigatorios())
+
+            cliente = validarCamposObrigatorios();
+            if (cliente == null)
                 return;
-            if (validarCamposNaoObrigatorios())
-                return;
-            c = setParametrosClientes();
+           
             //DEFINE SALVA OU ALTERA
             if (txtCodigo.Text == "NOVO")
             {
-                string retorno = cdao.inserir(c);
                 try
                 {
-                    int idCliente = Convert.ToInt32(retorno);
-                    MessageBox.Show("Inserido com sucesso:\nCodigo: " + idCliente.ToString() + " Nome: " + c.nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    int retorno = cliente.Save(session);
+                    MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Nome: " + cliente.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     atualizaGrade(false);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Não foi possivel inserir.\nDetalhes :" + retorno, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não foi possivel inserir.\nDetalhes :" + ex.InnerException.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else if (alte)
             {
-                string retorno = cdao.alterar(c);
                 try
                 {
-                    int idCliente = Convert.ToInt32(retorno);
-                    MessageBox.Show("Alterado com sucesso:\nCodigo: " + idCliente.ToString() + " Nome: " + c.nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    cliente.Update(session);
+                    MessageBox.Show("Alterado com sucesso:\nCodigo: (" + cliente.Id + ") Nome: " + cliente.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     atualizaGrade(false);
                 }
-                catch
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Não foi possivel alterar.\nDetalhes :" + retorno, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não foi possivel alterar.\nDetalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
         private void btnDeletar_Click(object sender, EventArgs e)
         {
+            session = NHibernateHelper.AbreSession();
+
             if (dtgCliente.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Nenhum Cliente selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            var clienteSelecionado = (dtgCliente.SelectedRows[0].DataBoundItem as Cliente);
-            DialogResult resultado = MessageBox.Show("Deseja deletar o Cliente: " + clienteSelecionado.nome + "?", "Pergunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            var id = (int)dtgCliente.CurrentRow.Cells["id"].Value;
+            cliente.Id = id;
+            var Selecionado = cliente.Find(session);
+
+            DialogResult resultado = MessageBox.Show("Deseja deletar o Cliente: " + Selecionado.Nome + "?", "Pergunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (resultado == DialogResult.No)
             {
                 return;
             }
 
-            string retorno = cdao.excluir(clienteSelecionado);
             try
             {
-                int idCliente = Convert.ToInt32(retorno);
-                MessageBox.Show("Exclido com sucesso", "Pergunta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                atualizaGrade(false);
+                if (Selecionado.Pedidos.Count < 0)
+                {
+                    Selecionado.Delete(session);
+                    MessageBox.Show("Exclido com sucesso", "Pergunta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    /*string pedidos = null;
+                    foreach (var pedido in Selecionado.Pedidos)
+                    {
+                        pedidos += Convert.ToString(pedido.Id) + " Data: " + pedido.DataPedido.ToShortDateString() + " Cliente: " + pedido.Cliente.Nome + "\n";
+                    }*/
+                    MessageBox.Show("Não foi possivel excluir. Usuario Contem esses Pedidos:\nQuantidade - " + Selecionado.Pedidos.Count, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Não foi possivel excluir.\nDetalhes :" + retorno, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Não foi possivel excluir. Detalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            session.Close();
+            atualizaGrade(false);
         }
         private void btnProcurar_Click(object sender, EventArgs e)
         {
@@ -124,26 +143,28 @@ namespace Formularios
         }
         private void dtgCliente_DoubleClick(object sender, EventArgs e)
         {
+            session = NHibernateHelper.AbreSession();
+
             if (dtgCliente.SelectedRows.Count == 0)
             {
                 MessageBox.Show("Nenhum Cliente selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            limparCampos(false);
-            var Selecionado = (dtgCliente.SelectedRows[0].DataBoundItem as Cliente);
-            txtCodigo.Text = Convert.ToString(Selecionado.idCliente);
-            txtNome.Text = Selecionado.nome;
-            txtDocumento.Text = Selecionado.cpfCnpj;
-            txtTelefone.Text = Selecionado.telefone;
-            txtCelular.Text = Selecionado.telefoneCelular;
-            txtEndereco.Text = Selecionado.endereco;
-            txtBairro.Text = Selecionado.bairro;
-            txtCidade.Text = Selecionado.cidade;
-            txtResponsavel.Text = Selecionado.responsavel;
 
-            Permisao();
+            limparCampos(false);
+
+            var id = (int)dtgCliente.CurrentRow.Cells["id"].Value;
+            cliente.Id = id;
+            var Selecionado = cliente.Find(session);
+
+            setParametrosForm(Selecionado);
+
+            
             tbcCliente.SelectedIndex = 0;
+            Permisao();
             txtNome.Focus();
+
+            session.Close();
         }
         private void txtCodigo_KeyDown(object sender, KeyEventArgs e)
         {
@@ -157,11 +178,11 @@ namespace Formularios
         #endregion
 
         #region METODOS
-        private void setParametrosCliente(Cliente cliente)
+        private void setParametrosForm(Cliente cliente)
         {
             if (txtCodigo.Text != "NOVO")
             {
-                cliente.Id = Convert.ToInt32(txtCodigo.Text);
+                txtCodigo.Text = Convert.ToString(cliente.Id);
             }
             txtNome.Text = cliente.Nome.ToUpper();
             txtEndereco.Text = cliente.Endereco.ToUpper();
@@ -205,15 +226,22 @@ namespace Formularios
         }
         private void atualizaGrade(bool a)
         {
+            session = NHibernateHelper.AbreSession();
             try
             {
+                IList<Cliente> listaCliente = null;
                 if (a == true)
-                    listacliente = cdao.consultarPorNome(txtPesquisar.Text);
+                {
+                    cliente.Nome = txtPesquisar.Text;
+                    listaCliente = cliente.BuscaPorNomeDeCliente(session);
+                }
                 else
-                    listacliente = cdao.consultarPorNome("");
+                    listaCliente = cliente.List(session);
+
                 dtgCliente.DataSource = null;
-                if (listacliente.Count > 0)
-                    dtgCliente.DataSource = listacliente;
+
+                if (listaCliente.Count > 0)
+                    dtgCliente.DataSource = listaCliente;
 
                 dtgCliente.Update();
                 dtgCliente.Refresh();
@@ -350,12 +378,12 @@ namespace Formularios
                 var Selecionado = cliente.Find(session);
                 if (Selecionado == null)
                 {
-                    MessageBox.Show("Nenhum cadastro de usuario com esse codigo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Nenhum cadastro de cliente com esse codigo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else
                 {
-                    setParametrosCliente(Selecionado);
+                    setParametrosForm(Selecionado);
                 }
             }
             catch (FormatException)
