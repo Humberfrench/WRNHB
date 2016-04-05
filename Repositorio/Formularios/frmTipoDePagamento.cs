@@ -8,19 +8,18 @@ using System.Windows.Forms;
 
 namespace Formularios
 {
-    public partial class frmTipoServico : Form
+    public partial class frmTipoDePagamento : Form
     {
-
-        private TipoDeServico tipodeservico = new TipoDeServico();
+        private TipoDePagamento tipodepagamento = new TipoDePagamento();
         private Usuario u = new Usuario();
         private ISession session;
         private bool alte = false;
-
-        public frmTipoServico(Usuario u)
+    
+        public frmTipoDePagamento(Usuario u)
         {
             InitializeComponent();
             this.u = u;
-            dtgTipoServico.AutoGenerateColumns = false;
+            dtgTipoPagamento.AutoGenerateColumns = false;
         }
 
         #region EVENTOS
@@ -29,7 +28,7 @@ namespace Formularios
             Dispose();
             DialogResult = DialogResult.No;
         }
-        private void frmTiposervico_Load(object sender, EventArgs e)
+        private void frmTipopagamento_Load(object sender, EventArgs e)
         {
             atualizaGrade(false);
         }
@@ -42,12 +41,11 @@ namespace Formularios
         private void btnEditar_Click(object sender, EventArgs e)
         {
             session = NHibernateHelper.AbreSession();
-
             if (validarCampoCodigo())
                 return;
 
-            tipodeservico = validarCamposObrigatorios();
-            if (tipodeservico == null)
+            tipodepagamento = validarCamposObrigatorios();
+            if (tipodepagamento == null)
                 return;
 
             //DEFINE SALVA OU ALTERA
@@ -55,8 +53,9 @@ namespace Formularios
             {
                 try
                 {
-                    int retorno = tipodeservico.Save(session);
-                    MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Nome: " + tipodeservico.Descricao + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    int retorno = tipodepagamento.Save(session);
+                    MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Nome: " + tipodepagamento.Descricao + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    atualizaGrade(false);
                 }
                 catch (Exception ex)
                 {
@@ -67,33 +66,32 @@ namespace Formularios
             {
                 try
                 {
-                    tipodeservico.Update(session);
-                    MessageBox.Show("Alterado com sucesso:\nCodigo: (" + tipodeservico.Id + ") Nome: " + tipodeservico.Descricao + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
+                    tipodepagamento.Update(session);
+                    MessageBox.Show("Alterado com sucesso:\nCodigo: (" + tipodepagamento.Id + ") Nome: " + tipodepagamento.Descricao + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    atualizaGrade(false);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Não foi possivel alterar. Detalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            atualizaGrade(false);
-
             session.Close();
         }
         private void btnDeletar_Click(object sender, EventArgs e)
         {
             session = NHibernateHelper.AbreSession();
 
-            if (dtgTipoServico.SelectedRows.Count == 0)
+            if (dtgTipoPagamento.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Nenhum Tipo de Servico selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Nenhum Tipo de Pagamento selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var id = (int)dtgTipoServico.CurrentRow.Cells["id"].Value;
-            tipodeservico.Id = id;
-            var Selecionado = tipodeservico.Find(session);
+            var id = (int)dtgTipoPagamento.CurrentRow.Cells["id"].Value;
+            tipodepagamento.Id = id;
+            var Selecionado = tipodepagamento.Find(session);
 
-            DialogResult resultado = MessageBox.Show("Deseja deletar o Tipo de Servico: " + Selecionado.Descricao + "?", "Pergunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult resultado = MessageBox.Show("Deseja deletar o Tipo de Pagamento: " + Selecionado.Descricao + "?", "Pergunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (resultado == DialogResult.No)
             {
@@ -102,7 +100,7 @@ namespace Formularios
 
             try
             {
-                if (Selecionado.Pedidos.Count < 0)
+                if (Selecionado.Pagamentos.Count < 0)
                 {
                     Selecionado.Delete(session);
                     MessageBox.Show("Exclido com sucesso", "Pergunta", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -114,16 +112,15 @@ namespace Formularios
                     {
                         pedidos += Convert.ToString(pedido.Id) + " Data: " + pedido.DataPedido.ToShortDateString() + " Cliente: " + pedido.Cliente.Nome + "\n";
                     }*/
-                    MessageBox.Show("Não foi possivel excluir. Tipo De Servicos Contem esses Pedidos:\nQuantidade - " + Selecionado.Pedidos.Count, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não foi possivel excluir. Tipo De Pagamento Contem esses Pagamentos:\nQuantidade - " + Selecionado.Pagamentos.Count, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Não foi possivel excluir. Detalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            session.Close();
             atualizaGrade(false);
-
-            session.Close();            
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -143,63 +140,63 @@ namespace Formularios
             if (e.KeyCode == Keys.Enter)
                 atualizaGrade(true);
         }
-        private void dtgTipoServico_DoubleClick(object sender, EventArgs e)
+        private void dtgTipoPagamento_DoubleClick(object sender, EventArgs e)
         {
             session = NHibernateHelper.AbreSession();
 
-            if (dtgTipoServico.SelectedRows.Count == 0)
+            if (dtgTipoPagamento.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Nenhum Tipo de Serviço selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Nenhum Tipo de Pagamento selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             limparCampos(false);
 
-            var id = (int)dtgTipoServico.CurrentRow.Cells["id"].Value;
-            tipodeservico.Id = id;
-            var Selecionado = tipodeservico.Find(session);
+            var id = (int)dtgTipoPagamento.CurrentRow.Cells["id"].Value;
+            tipodepagamento.Id = id;
+            var Selecionado = tipodepagamento.Find(session);
 
             setParametrosForm(Selecionado);
 
             Permisao();
-            tbcServico.SelectedIndex = 0;
+            tbcTipoPagamento.SelectedIndex = 0;
             txtDescricao.Focus();
 
             session.Close();
+        }
+        private void tbcTipoPagamento_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Permisao();
         }
         private void txtCodigo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 pesquisar();
         }
-        private void tbcServico_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Permisao();
-        }
         #endregion
 
         #region METODOS
         private void atualizaGrade(bool a)
-        {           
+        {
             try
             {
                 session = NHibernateHelper.AbreSession();
 
-                IList<TipoDeServico> listaTipoDeServico = null;
+                IList<TipoDePagamento> listaTipoDePagamento = null;
                 if (a == true)
                 {
-                    tipodeservico.Descricao = txtPesquisar.Text;
-                    listaTipoDeServico = tipodeservico.BuscaPorNomeDeTipoDeServico(session);
+                    tipodepagamento.Descricao = txtPesquisar.Text;
+                    listaTipoDePagamento = tipodepagamento.BuscaPorNomeDeTipoDePagamento(session);
                 }
                 else
-                    listaTipoDeServico = tipodeservico.List(session);
+                    listaTipoDePagamento = tipodepagamento.List(session);
 
-                dtgTipoServico.DataSource = null;
+                dtgTipoPagamento.DataSource = null;
 
-                if (listaTipoDeServico.Count > 0)
-                    dtgTipoServico.DataSource = listaTipoDeServico;
+                if (listaTipoDePagamento.Count > 0)
+                    dtgTipoPagamento.DataSource = listaTipoDePagamento;
 
-                dtgTipoServico.Update();
-                dtgTipoServico.Refresh();
+                dtgTipoPagamento.Update();
+                dtgTipoPagamento.Refresh();
 
                 limparCampos(false);
                 Permisao();
@@ -227,12 +224,12 @@ namespace Formularios
                 txtDescricao.Focus();
             }
         }
-        private TipoDeServico validarCamposObrigatorios()
+        private TipoDePagamento validarCamposObrigatorios()
         {
-            TipoDeServico u = new TipoDeServico
+            TipoDePagamento u = new TipoDePagamento
             {
                 Id = (txtCodigo.Text != "NOVO") ? Convert.ToInt32(txtCodigo.Text) : 0,
-                Descricao = txtDescricao.Text.ToUpper(),                
+                Descricao = txtDescricao.Text.ToUpper(),
             };
 
             ValidationContext context = new ValidationContext(u, null, null);
@@ -251,7 +248,7 @@ namespace Formularios
                     {
                         case "Descricao":
                             txtDescricao.Focus();
-                            break;                        
+                            break;
                         default:
                             break;
                     }
@@ -267,18 +264,18 @@ namespace Formularios
             if (txtCodigo.Text == "")
             {
                 MessageBox.Show("Campo Codigo não pode ser vazio," +
-                    " Click no botão Novo ou realize uma pesquisa", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    " Click no botão Novo ou escolha um Tipo de Armazenamento", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
             return false;
         }
-        private void setParametrosForm(TipoDeServico tipodeservico)
+        private void setParametrosForm(TipoDePagamento tipodepagamento)
         {
             if (txtCodigo.Text != "NOVO")
             {
-                txtCodigo.Text = Convert.ToString(tipodeservico.Id);
+                txtCodigo.Text = Convert.ToString(tipodepagamento.Id);
             }
-            txtDescricao.Text = tipodeservico.Descricao.ToUpper();            
+            txtDescricao.Text = tipodepagamento.Descricao.ToUpper();
         }
         private void Permisao()
         {
@@ -286,7 +283,6 @@ namespace Formularios
                 btnNovo.Enabled = false;
             else
                 btnNovo.Enabled = true;
-
             if (!u.Alterar)
             {
                 btnEditar.Enabled = false;
@@ -297,7 +293,8 @@ namespace Formularios
                 btnEditar.Enabled = true;
                 alte = true;
             }
-            if ((!u.Deletar) || tbcServico.SelectedIndex != 1)
+
+            if ((!u.Deletar) || tbcTipoPagamento.SelectedIndex != 1)
                 btnDeletar.Enabled = false;
             else
                 btnDeletar.Enabled = true;
@@ -311,11 +308,11 @@ namespace Formularios
                 if (validarCampoCodigo())
                     return;
                 //Convert.ToInt32(txtCodigo.Text);
-                tipodeservico.Id = Convert.ToInt32(txtCodigo.Text);
-                var Selecionado = tipodeservico.Find(session);
+                tipodepagamento.Id = Convert.ToInt32(txtCodigo.Text);
+                var Selecionado = tipodepagamento.Find(session);
                 if (Selecionado == null)
                 {
-                    MessageBox.Show("Nenhum cadastro de tipo de servico com esse codigo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Nenhum cadastro de tipo de pagamento com esse codigo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else

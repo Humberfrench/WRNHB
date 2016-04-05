@@ -8,30 +8,51 @@ using System.Windows.Forms;
 
 namespace Formularios
 {
-    public partial class frmTipoServico : Form
+    public partial class frmTipoArmazenamento : Form
     {
-
-        private TipoDeServico tipodeservico = new TipoDeServico();
+        private TipoDeArmazenamento tipodearmazenamento = new TipoDeArmazenamento();
         private Usuario u = new Usuario();
-        private ISession session;
         private bool alte = false;
+        private ISession session;
 
-        public frmTipoServico(Usuario u)
+        public frmTipoArmazenamento(Usuario u)
         {
             InitializeComponent();
             this.u = u;
-            dtgTipoServico.AutoGenerateColumns = false;
+            dtgTipoarmazenamento.AutoGenerateColumns = false;
         }
-
         #region EVENTOS
         private void btnFechar_Click(object sender, EventArgs e)
         {
             Dispose();
             DialogResult = DialogResult.No;
         }
-        private void frmTiposervico_Load(object sender, EventArgs e)
+        private void frmTipoarmazenamento_Load(object sender, EventArgs e)
         {
             atualizaGrade(false);
+        }
+        private void dtgTipoarmazenamento_DoubleClick(object sender, EventArgs e)
+        {
+            session = NHibernateHelper.AbreSession();
+
+            if (dtgTipoarmazenamento.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Nenhum Tipo de Armazenameto selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            limparCampos(false);
+
+            var id = (int)dtgTipoarmazenamento.CurrentRow.Cells["id"].Value;
+            tipodearmazenamento.Id = id;
+            var Selecionado = tipodearmazenamento.Find(session);
+
+            setParametrosForm(Selecionado);
+
+            Permisao();
+            tbcTipoarmazenamento.SelectedIndex = 0;
+            txtDescricao.Focus();
+
+            session.Close();           
         }
         private void btnNovo_Click(object sender, EventArgs e)
         {
@@ -42,12 +63,11 @@ namespace Formularios
         private void btnEditar_Click(object sender, EventArgs e)
         {
             session = NHibernateHelper.AbreSession();
-
             if (validarCampoCodigo())
                 return;
 
-            tipodeservico = validarCamposObrigatorios();
-            if (tipodeservico == null)
+            tipodearmazenamento = validarCamposObrigatorios();
+            if (tipodearmazenamento == null)
                 return;
 
             //DEFINE SALVA OU ALTERA
@@ -55,8 +75,9 @@ namespace Formularios
             {
                 try
                 {
-                    int retorno = tipodeservico.Save(session);
-                    MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Nome: " + tipodeservico.Descricao + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    int retorno = tipodearmazenamento.Save(session);
+                    MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Descrição: " + tipodearmazenamento.Descricao + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    atualizaGrade(false);
                 }
                 catch (Exception ex)
                 {
@@ -67,33 +88,31 @@ namespace Formularios
             {
                 try
                 {
-                    tipodeservico.Update(session);
-                    MessageBox.Show("Alterado com sucesso:\nCodigo: (" + tipodeservico.Id + ") Nome: " + tipodeservico.Descricao + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
+                    tipodearmazenamento.Update(session);
+                    MessageBox.Show("Alterado com sucesso:\nCodigo: (" + tipodearmazenamento.Id + ") Descrição: " + tipodearmazenamento.Descricao + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    atualizaGrade(false);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Não foi possivel alterar. Detalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-            atualizaGrade(false);
-
-            session.Close();
         }
         private void btnDeletar_Click(object sender, EventArgs e)
         {
             session = NHibernateHelper.AbreSession();
 
-            if (dtgTipoServico.SelectedRows.Count == 0)
+            if (dtgTipoarmazenamento.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Nenhum Tipo de Servico selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Nenhum Tipo de Armazenamento selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var id = (int)dtgTipoServico.CurrentRow.Cells["id"].Value;
-            tipodeservico.Id = id;
-            var Selecionado = tipodeservico.Find(session);
+            var id = (int)dtgTipoarmazenamento.CurrentRow.Cells["id"].Value;
+            tipodearmazenamento.Id = id;
+            var Selecionado = tipodearmazenamento.Find(session);
 
-            DialogResult resultado = MessageBox.Show("Deseja deletar o Tipo de Servico: " + Selecionado.Descricao + "?", "Pergunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult resultado = MessageBox.Show("Deseja deletar o Tipo de Armazenamento: " + Selecionado.Descricao + "?", "Pergunta", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (resultado == DialogResult.No)
             {
@@ -102,7 +121,7 @@ namespace Formularios
 
             try
             {
-                if (Selecionado.Pedidos.Count < 0)
+                if (Selecionado.Armazenamentos.Count < 0)
                 {
                     Selecionado.Delete(session);
                     MessageBox.Show("Exclido com sucesso", "Pergunta", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -114,16 +133,16 @@ namespace Formularios
                     {
                         pedidos += Convert.ToString(pedido.Id) + " Data: " + pedido.DataPedido.ToShortDateString() + " Cliente: " + pedido.Cliente.Nome + "\n";
                     }*/
-                    MessageBox.Show("Não foi possivel excluir. Tipo De Servicos Contem esses Pedidos:\nQuantidade - " + Selecionado.Pedidos.Count, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Não foi possivel excluir. Tipo De Armazenamento Contem esses Armazenametos:\nQuantidade - " + Selecionado.Armazenamentos.Count, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Não foi possivel excluir. Detalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            }            
             atualizaGrade(false);
 
-            session.Close();            
+            session.Close();
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
@@ -143,63 +162,40 @@ namespace Formularios
             if (e.KeyCode == Keys.Enter)
                 atualizaGrade(true);
         }
-        private void dtgTipoServico_DoubleClick(object sender, EventArgs e)
+        private void tbcTipoarmazenamento_SelectedIndexChanged(object sender, EventArgs e)
         {
-            session = NHibernateHelper.AbreSession();
-
-            if (dtgTipoServico.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Nenhum Tipo de Serviço selecionado", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            limparCampos(false);
-
-            var id = (int)dtgTipoServico.CurrentRow.Cells["id"].Value;
-            tipodeservico.Id = id;
-            var Selecionado = tipodeservico.Find(session);
-
-            setParametrosForm(Selecionado);
-
             Permisao();
-            tbcServico.SelectedIndex = 0;
-            txtDescricao.Focus();
-
-            session.Close();
         }
         private void txtCodigo_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 pesquisar();
         }
-        private void tbcServico_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Permisao();
-        }
         #endregion
 
         #region METODOS
         private void atualizaGrade(bool a)
-        {           
+        {            
             try
             {
                 session = NHibernateHelper.AbreSession();
 
-                IList<TipoDeServico> listaTipoDeServico = null;
+                IList<TipoDeArmazenamento> listaTipoDeArmazenamento = null;
                 if (a == true)
                 {
-                    tipodeservico.Descricao = txtPesquisar.Text;
-                    listaTipoDeServico = tipodeservico.BuscaPorNomeDeTipoDeServico(session);
+                    tipodearmazenamento.Descricao = txtPesquisar.Text;
+                    listaTipoDeArmazenamento = tipodearmazenamento.BuscaPorNomeDeTipoDeServico(session);
                 }
                 else
-                    listaTipoDeServico = tipodeservico.List(session);
+                    listaTipoDeArmazenamento = tipodearmazenamento.List(session);
 
-                dtgTipoServico.DataSource = null;
+                dtgTipoarmazenamento.DataSource = null;
 
-                if (listaTipoDeServico.Count > 0)
-                    dtgTipoServico.DataSource = listaTipoDeServico;
+                if (listaTipoDeArmazenamento.Count > 0)
+                    dtgTipoarmazenamento.DataSource = listaTipoDeArmazenamento;
 
-                dtgTipoServico.Update();
-                dtgTipoServico.Refresh();
+                dtgTipoarmazenamento.Update();
+                dtgTipoarmazenamento.Refresh();
 
                 limparCampos(false);
                 Permisao();
@@ -227,12 +223,12 @@ namespace Formularios
                 txtDescricao.Focus();
             }
         }
-        private TipoDeServico validarCamposObrigatorios()
+        private TipoDeArmazenamento validarCamposObrigatorios()
         {
-            TipoDeServico u = new TipoDeServico
+            TipoDeArmazenamento u = new TipoDeArmazenamento
             {
                 Id = (txtCodigo.Text != "NOVO") ? Convert.ToInt32(txtCodigo.Text) : 0,
-                Descricao = txtDescricao.Text.ToUpper(),                
+                Descricao = txtDescricao.Text.ToUpper(),
             };
 
             ValidationContext context = new ValidationContext(u, null, null);
@@ -251,7 +247,7 @@ namespace Formularios
                     {
                         case "Descricao":
                             txtDescricao.Focus();
-                            break;                        
+                            break;
                         default:
                             break;
                     }
@@ -267,18 +263,18 @@ namespace Formularios
             if (txtCodigo.Text == "")
             {
                 MessageBox.Show("Campo Codigo não pode ser vazio," +
-                    " Click no botão Novo ou realize uma pesquisa", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    " Click no botão Novo ou escolha um Tipo de Armazenamento", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return true;
             }
             return false;
         }
-        private void setParametrosForm(TipoDeServico tipodeservico)
+        private void setParametrosForm(TipoDeArmazenamento tipodearmazenamento)
         {
             if (txtCodigo.Text != "NOVO")
             {
-                txtCodigo.Text = Convert.ToString(tipodeservico.Id);
+                txtCodigo.Text = Convert.ToString(tipodearmazenamento.Id);
             }
-            txtDescricao.Text = tipodeservico.Descricao.ToUpper();            
+            txtDescricao.Text = tipodearmazenamento.Descricao.ToUpper();
         }
         private void Permisao()
         {
@@ -286,7 +282,6 @@ namespace Formularios
                 btnNovo.Enabled = false;
             else
                 btnNovo.Enabled = true;
-
             if (!u.Alterar)
             {
                 btnEditar.Enabled = false;
@@ -297,7 +292,8 @@ namespace Formularios
                 btnEditar.Enabled = true;
                 alte = true;
             }
-            if ((!u.Deletar) || tbcServico.SelectedIndex != 1)
+
+            if ((!u.Deletar) || tbcTipoarmazenamento.SelectedIndex != 1)
                 btnDeletar.Enabled = false;
             else
                 btnDeletar.Enabled = true;
@@ -310,12 +306,12 @@ namespace Formularios
 
                 if (validarCampoCodigo())
                     return;
-                //Convert.ToInt32(txtCodigo.Text);
-                tipodeservico.Id = Convert.ToInt32(txtCodigo.Text);
-                var Selecionado = tipodeservico.Find(session);
+
+                tipodearmazenamento.Id = Convert.ToInt32(txtCodigo.Text);
+                var Selecionado = tipodearmazenamento.Find(session);
                 if (Selecionado == null)
                 {
-                    MessageBox.Show("Nenhum cadastro de tipo de servico com esse codigo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Nenhum cadastro de tipo de armazenamento com esse codigo.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
                 else

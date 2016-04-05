@@ -74,7 +74,7 @@
             this.PictureBox2 = new System.Windows.Forms.PictureBox();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nome = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cpjCnpj = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Documento = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.endereco = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.bairro = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cidade = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -108,7 +108,7 @@
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(725, 31);
-            this.toolStrip1.TabIndex = 37;
+            this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // btnNovo
@@ -187,7 +187,7 @@
             this.tbcCliente.Name = "tbcCliente";
             this.tbcCliente.SelectedIndex = 0;
             this.tbcCliente.Size = new System.Drawing.Size(701, 272);
-            this.tbcCliente.TabIndex = 39;
+            this.tbcCliente.TabIndex = 2;
             this.tbcCliente.SelectedIndexChanged += new System.EventHandler(this.tbcCliente_SelectedIndexChanged);
             // 
             // tabPage3
@@ -231,7 +231,7 @@
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.groupBox2.Size = new System.Drawing.Size(695, 245);
-            this.groupBox2.TabIndex = 23;
+            this.groupBox2.TabIndex = 0;
             this.groupBox2.TabStop = false;
             // 
             // txtCelular
@@ -240,7 +240,7 @@
             this.txtCelular.Mask = "(99)00000-0000";
             this.txtCelular.Name = "txtCelular";
             this.txtCelular.Size = new System.Drawing.Size(143, 20);
-            this.txtCelular.TabIndex = 59;
+            this.txtCelular.TabIndex = 9;
             // 
             // txtTelefone
             // 
@@ -248,7 +248,7 @@
             this.txtTelefone.Mask = "(99)0000-0000";
             this.txtTelefone.Name = "txtTelefone";
             this.txtTelefone.Size = new System.Drawing.Size(143, 20);
-            this.txtTelefone.TabIndex = 58;
+            this.txtTelefone.TabIndex = 7;
             // 
             // txtResponsavel
             // 
@@ -256,7 +256,7 @@
             this.txtResponsavel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtResponsavel.Name = "txtResponsavel";
             this.txtResponsavel.Size = new System.Drawing.Size(259, 20);
-            this.txtResponsavel.TabIndex = 7;
+            this.txtResponsavel.TabIndex = 17;
             // 
             // label5
             // 
@@ -265,7 +265,7 @@
             this.label5.Location = new System.Drawing.Point(321, 177);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(84, 13);
-            this.label5.TabIndex = 54;
+            this.label5.TabIndex = 16;
             this.label5.Text = "Responsavel:";
             // 
             // label11
@@ -275,7 +275,7 @@
             this.label11.Location = new System.Drawing.Point(20, 174);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(53, 13);
-            this.label11.TabIndex = 57;
+            this.label11.TabIndex = 8;
             this.label11.Text = "Celular:";
             // 
             // label7
@@ -285,7 +285,7 @@
             this.label7.Location = new System.Drawing.Point(20, 136);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(61, 13);
-            this.label7.TabIndex = 55;
+            this.label7.TabIndex = 6;
             this.label7.Text = "Telefone:";
             // 
             // Label10
@@ -295,7 +295,7 @@
             this.Label10.Location = new System.Drawing.Point(17, 17);
             this.Label10.Name = "Label10";
             this.Label10.Size = new System.Drawing.Size(102, 13);
-            this.Label10.TabIndex = 54;
+            this.Label10.TabIndex = 0;
             this.Label10.Text = "Código Cliente *";
             // 
             // txtCidade
@@ -304,7 +304,7 @@
             this.txtCidade.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtCidade.Name = "txtCidade";
             this.txtCidade.Size = new System.Drawing.Size(259, 20);
-            this.txtCidade.TabIndex = 6;
+            this.txtCidade.TabIndex = 15;
             // 
             // Label9
             // 
@@ -313,7 +313,7 @@
             this.Label9.Location = new System.Drawing.Point(320, 136);
             this.Label9.Name = "Label9";
             this.Label9.Size = new System.Drawing.Size(52, 13);
-            this.Label9.TabIndex = 52;
+            this.Label9.TabIndex = 14;
             this.Label9.Text = "Cidade:";
             // 
             // txtBairro
@@ -322,7 +322,7 @@
             this.txtBairro.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtBairro.Name = "txtBairro";
             this.txtBairro.Size = new System.Drawing.Size(259, 20);
-            this.txtBairro.TabIndex = 5;
+            this.txtBairro.TabIndex = 13;
             // 
             // Label8
             // 
@@ -331,7 +331,7 @@
             this.Label8.Location = new System.Drawing.Point(320, 98);
             this.Label8.Name = "Label8";
             this.Label8.Size = new System.Drawing.Size(47, 13);
-            this.Label8.TabIndex = 50;
+            this.Label8.TabIndex = 12;
             this.Label8.Text = "Bairro:";
             // 
             // txtCodigo
@@ -339,7 +339,7 @@
             this.txtCodigo.Location = new System.Drawing.Point(21, 34);
             this.txtCodigo.Name = "txtCodigo";
             this.txtCodigo.Size = new System.Drawing.Size(116, 20);
-            this.txtCodigo.TabIndex = 49;
+            this.txtCodigo.TabIndex = 1;
             this.txtCodigo.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtCodigo_KeyDown);
             // 
             // btnProcurar
@@ -350,7 +350,7 @@
             this.btnProcurar.Location = new System.Drawing.Point(143, 31);
             this.btnProcurar.Name = "btnProcurar";
             this.btnProcurar.Size = new System.Drawing.Size(105, 25);
-            this.btnProcurar.TabIndex = 30;
+            this.btnProcurar.TabIndex = 18;
             this.btnProcurar.Text = "Carregar...";
             this.btnProcurar.UseVisualStyleBackColor = false;
             this.btnProcurar.Click += new System.EventHandler(this.btnProcurar_Click);
@@ -361,7 +361,7 @@
             this.txtEndereco.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtEndereco.Name = "txtEndereco";
             this.txtEndereco.Size = new System.Drawing.Size(259, 20);
-            this.txtEndereco.TabIndex = 4;
+            this.txtEndereco.TabIndex = 11;
             // 
             // Label1
             // 
@@ -370,7 +370,7 @@
             this.Label1.Location = new System.Drawing.Point(320, 57);
             this.Label1.Name = "Label1";
             this.Label1.Size = new System.Drawing.Size(65, 13);
-            this.Label1.TabIndex = 11;
+            this.Label1.TabIndex = 10;
             this.Label1.Text = "Endereço:";
             // 
             // txtDocumento
@@ -379,7 +379,7 @@
             this.txtDocumento.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtDocumento.Name = "txtDocumento";
             this.txtDocumento.Size = new System.Drawing.Size(272, 20);
-            this.txtDocumento.TabIndex = 1;
+            this.txtDocumento.TabIndex = 5;
             // 
             // Label3
             // 
@@ -388,7 +388,7 @@
             this.Label3.Location = new System.Drawing.Point(20, 96);
             this.Label3.Name = "Label3";
             this.Label3.Size = new System.Drawing.Size(88, 13);
-            this.Label3.TabIndex = 5;
+            this.Label3.TabIndex = 4;
             this.Label3.Text = "Documento: *";
             // 
             // txtNome
@@ -397,7 +397,7 @@
             this.txtNome.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.txtNome.Name = "txtNome";
             this.txtNome.Size = new System.Drawing.Size(272, 20);
-            this.txtNome.TabIndex = 0;
+            this.txtNome.TabIndex = 3;
             // 
             // label6
             // 
@@ -452,7 +452,7 @@
             this.dtgCliente.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
             this.nome,
-            this.cpjCnpj,
+            this.Documento,
             this.endereco,
             this.bairro,
             this.cidade,
@@ -481,7 +481,7 @@
             this.Label2.Location = new System.Drawing.Point(122, 35);
             this.Label2.Name = "Label2";
             this.Label2.Size = new System.Drawing.Size(382, 13);
-            this.Label2.TabIndex = 10;
+            this.Label2.TabIndex = 1;
             this.Label2.Text = "De maneira fácil e rápida você pode visualizar e verificar a relação dos clientes" +
     ".";
             // 
@@ -492,7 +492,7 @@
             this.Label4.Location = new System.Drawing.Point(119, 18);
             this.Label4.Name = "Label4";
             this.Label4.Size = new System.Drawing.Size(322, 13);
-            this.Label4.TabIndex = 9;
+            this.Label4.TabIndex = 0;
             this.Label4.Text = "Cadastrar e Consultar Lista de Todos os Clientes";
             // 
             // Panel2
@@ -504,7 +504,7 @@
             this.Panel2.Location = new System.Drawing.Point(0, 31);
             this.Panel2.Name = "Panel2";
             this.Panel2.Size = new System.Drawing.Size(725, 67);
-            this.Panel2.TabIndex = 0;
+            this.Panel2.TabIndex = 1;
             // 
             // PictureBox2
             // 
@@ -537,13 +537,13 @@
             this.nome.ReadOnly = true;
             this.nome.Width = 150;
             // 
-            // cpjCnpj
+            // Documento
             // 
-            this.cpjCnpj.DataPropertyName = "Documento";
-            this.cpjCnpj.HeaderText = "Cpf/Cnpj";
-            this.cpjCnpj.Name = "cpjCnpj";
-            this.cpjCnpj.ReadOnly = true;
-            this.cpjCnpj.Width = 80;
+            this.Documento.DataPropertyName = "Documento";
+            this.Documento.HeaderText = "Documento";
+            this.Documento.Name = "Documento";
+            this.Documento.ReadOnly = true;
+            this.Documento.Width = 80;
             // 
             // endereco
             // 
@@ -582,7 +582,7 @@
             this.telefoneCelular.HeaderText = "Celular";
             this.telefoneCelular.Name = "telefoneCelular";
             this.telefoneCelular.ReadOnly = true;
-            this.telefoneCelular.Width = 80;
+            this.telefoneCelular.Width = 85;
             // 
             // responsavel
             // 
@@ -680,7 +680,7 @@
         private System.Windows.Forms.MaskedTextBox txtTelefone;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn nome;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cpjCnpj;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Documento;
         private System.Windows.Forms.DataGridViewTextBoxColumn endereco;
         private System.Windows.Forms.DataGridViewTextBoxColumn bairro;
         private System.Windows.Forms.DataGridViewTextBoxColumn cidade;

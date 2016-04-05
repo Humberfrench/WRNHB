@@ -54,7 +54,7 @@ namespace Formularios
             cliente = validarCamposObrigatorios();
             if (cliente == null)
                 return;
-           
+
             //DEFINE SALVA OU ALTERA
             if (txtCodigo.Text == "NOVO")
             {
@@ -62,7 +62,6 @@ namespace Formularios
                 {
                     int retorno = cliente.Save(session);
                     MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Nome: " + cliente.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    atualizaGrade(false);
                 }
                 catch (Exception ex)
                 {
@@ -74,14 +73,16 @@ namespace Formularios
                 try
                 {
                     cliente.Update(session);
-                    MessageBox.Show("Alterado com sucesso:\nCodigo: (" + cliente.Id + ") Nome: " + cliente.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    atualizaGrade(false);
+                    MessageBox.Show("Alterado com sucesso:\nCodigo: (" + cliente.Id + ") Nome: " + cliente.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);                    
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Não foi possivel alterar.\nDetalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                }                
             }
+            atualizaGrade(false);
+
+            session.Close();
         }
         private void btnDeletar_Click(object sender, EventArgs e)
         {
@@ -124,9 +125,10 @@ namespace Formularios
             catch (Exception ex)
             {
                 MessageBox.Show("Não foi possivel excluir. Detalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            session.Close();
+            }            
             atualizaGrade(false);
+
+            session.Close();
         }
         private void btnProcurar_Click(object sender, EventArgs e)
         {
@@ -211,6 +213,7 @@ namespace Formularios
             {
                 txtCodigo.Text = "";
             }
+
             txtNome.Text = "";
             txtDocumento.Text = "";
             txtTelefone.Text = "";
@@ -219,16 +222,18 @@ namespace Formularios
             txtBairro.Text = "";
             txtCidade.Text = "";
             txtResponsavel.Text = "";
+
             if (novo == true)
             {
                 txtNome.Focus();
             }
         }
         private void atualizaGrade(bool a)
-        {
-            session = NHibernateHelper.AbreSession();
+        {            
             try
             {
+                session = NHibernateHelper.AbreSession();
+
                 IList<Cliente> listaCliente = null;
                 if (a == true)
                 {
@@ -247,6 +252,8 @@ namespace Formularios
                 dtgCliente.Refresh();
                 limparCampos(false);
                 Permisao();
+
+                session.Close();
             }
             catch (Exception e)
             {
@@ -316,24 +323,7 @@ namespace Formularios
             }
             else
                 return u;
-        }
-        private bool validarCamposNaoObrigatorios()
-        {
-            int valor;
-            if (!Int32.TryParse(txtTelefone.Text, out valor))
-            {
-                MessageBox.Show("Campo telefone precisa ser numerico!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtTelefone.Focus();
-                return true;
-            }
-            if (!Int32.TryParse(txtCelular.Text, out valor))
-            {
-                MessageBox.Show("Campo celular precisa ser numerico!", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCelular.Focus();
-                return true;
-            }
-            return false;
-        }
+        }        
         private bool validarCampoCodigo()
         {
             if (txtCodigo.Text == "")
@@ -367,10 +357,11 @@ namespace Formularios
                 btnDeletar.Enabled = true;
         }
         private void pesquisar()
-        {
-            session = NHibernateHelper.AbreSession();
+        {            
             try
             {
+                session = NHibernateHelper.AbreSession();
+
                 if (validarCampoCodigo())
                     return;
                 //Convert.ToInt32(txtCodigo.Text);
@@ -385,6 +376,8 @@ namespace Formularios
                 {
                     setParametrosForm(Selecionado);
                 }
+
+                session.Close();
             }
             catch (FormatException)
             {

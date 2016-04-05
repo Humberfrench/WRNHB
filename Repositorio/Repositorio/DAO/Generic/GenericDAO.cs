@@ -39,9 +39,11 @@ namespace Repositorio.DAO.Generic
                 try
                 {
                     _session.Delete(entity);
+                    transaction.Commit();
                 }
                 catch (HibernateException he)
                 {
+                    transaction.Rollback();
                     throw new Exception(he.InnerException.Message);
                 }
             }

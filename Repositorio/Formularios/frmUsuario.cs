@@ -57,7 +57,6 @@ namespace Formularios
                 {                                       
                     int retorno = usuario.Save(session);
                     MessageBox.Show("Inserido com sucesso:\nCodigo: (" + retorno.ToString() + ") Nome: " + usuario.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    atualizaGrade(false);
                 }
                 catch (Exception ex)
                 {
@@ -70,7 +69,6 @@ namespace Formularios
                 {
                     usuario.Update(session);
                     MessageBox.Show("Alterado com sucesso:\nCodigo: (" + usuario.Id + ") Nome: " + usuario.Nome + ".", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    atualizaGrade(false);
                 }
                 catch (Exception ex)
                 {
@@ -81,8 +79,9 @@ namespace Formularios
             {
                 MessageBox.Show("Realizar uma consulta antes de alterar", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            session.Close();
             atualizaGrade(false);
+
+            session.Close();            
         }
         private void btnDeletar_Click(object sender, EventArgs e)
         {
@@ -107,7 +106,7 @@ namespace Formularios
 
             try
             {
-                if (Selecionado.Pedidos.Count < 0)
+                if (Selecionado.Pedidos.Count == 0)
                 {
                     Selecionado.Delete(session);
                     MessageBox.Show("Exclido com sucesso", "Pergunta", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -125,9 +124,10 @@ namespace Formularios
             catch (Exception ex)
             {
                 MessageBox.Show("Não foi possivel excluir. Detalhes :" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            session.Close();
+            }            
             atualizaGrade(false);
+
+            session.Close();
         }
         private void btnProcurar_Click(object sender, EventArgs e)
         {
@@ -222,7 +222,6 @@ namespace Formularios
             rbGravarNao.Checked = true;
             rbAlteraNao.Checked = true;
             rbDeletaNao.Checked = true;            
-            txtPesquisar.Text = "";
 
             alte = false;
             if (novo == true)
@@ -231,10 +230,10 @@ namespace Formularios
             }
         }
         private void atualizaGrade(bool a)
-        {
-            session = NHibernateHelper.AbreSession();
+        {           
             try
             {
+                session = NHibernateHelper.AbreSession();
                 IList<Usuario> listaUsuario = null;
                 if (a == true)
                 {
@@ -252,12 +251,13 @@ namespace Formularios
                 dtgUsuario.Update();
                 dtgUsuario.Refresh();
                 limparCampos(false);
+
+                session.Close();
             }
             catch (Exception e)
             {
                 MessageBox.Show("Error: " + e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            session.Close();           
+            }                    
         }
         private Usuario validarCamposObrigatorios()
         {
@@ -315,13 +315,13 @@ namespace Formularios
             return false;
         }
         private void pesquisar()
-        {
-            session = NHibernateHelper.AbreSession();
+        {            
             try
             {
+                session = NHibernateHelper.AbreSession();
+
                 if (validarCampoCodigo())
                     return;
-                //Convert.ToInt32(txtCodigo.Text);
                 usuario.Id = Convert.ToInt32(txtCodigo.Text);
                 var Selecionado = usuario.Find(session);
                 if (Selecionado == null)
@@ -333,12 +333,13 @@ namespace Formularios
                 {
                     setParametrosForm(Selecionado);
                 }
+
+                session.Close();
             }
             catch (FormatException)
             {
                 MessageBox.Show("Não pode realizar consulta com o codigo 'NOVO' ou vazio.", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            session.Close();
+            }            
         }
         #endregion
     }

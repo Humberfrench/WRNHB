@@ -76,11 +76,23 @@
     <Compile Include="frmMenu.Designer.cs">
       <DependentUpon>frmMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmTiposervico.cs">
+    <Compile Include="frmTipoArmazenamento.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmTiposervico.Designer.cs">
-      <DependentUpon>frmTiposervico.cs</DependentUpon>
+    <Compile Include="frmTipoArmazenamento.Designer.cs">
+      <DependentUpon>frmTipoArmazenamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoDePagamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTipoDePagamento.Designer.cs">
+      <DependentUpon>frmTipoDePagamento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmTipoServico.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmTipoServico.Designer.cs">
+      <DependentUpon>frmTipoServico.cs</DependentUpon>
     </Compile>
     <Compile Include="frmUsuario.cs">
       <SubType>Form</SubType>
@@ -102,8 +114,11 @@
     <EmbeddedResource Include="frmMenu.resx">
       <DependentUpon>frmMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmTiposervico.resx">
-      <DependentUpon>frmTiposervico.cs</DependentUpon>
+    <EmbeddedResource Include="frmTipoArmazenamento.resx">
+      <DependentUpon>frmTipoArmazenamento.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmTipoServico.resx">
+      <DependentUpon>frmTipoServico.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmUsuario.resx">
       <DependentUpon>frmUsuario.cs</DependentUpon>

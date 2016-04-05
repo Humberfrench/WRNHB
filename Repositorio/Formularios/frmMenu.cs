@@ -91,30 +91,30 @@ namespace Formularios
 
         private void tiposDeArmazenamentosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*Hide();
-            frmTipoarmazenamento frmtipoarmazenamento = new frmTipoarmazenamento(u);
+            Hide();
+            frmTipoArmazenamento frmtipoarmazenamento = new frmTipoArmazenamento(u);
             DialogResult dialog = frmtipoarmazenamento.ShowDialog();
             if (dialog == DialogResult.Yes || dialog == DialogResult.No)
             {
                 Show();
-            }*/
+            }
         }
 
         private void tiposDePagamentosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*Hide();
-            frmTipopagamento frmtipopagamento = new frmTipopagamento(u);
+            Hide();
+            frmTipoDePagamento frmtipopagamento = new frmTipoDePagamento(u);
             DialogResult dialog = frmtipopagamento.ShowDialog();
             if (dialog == DialogResult.Yes || dialog == DialogResult.No)
             {
                 Show();
-            }*/
+            }
         }
 
         private void tiposDeServicoToolStripMenuItem_Click(object sender, EventArgs e)
         {
              Hide();
-             frmTiposervico frmtiposervico = new frmTiposervico(u);
+             frmTipoServico frmtiposervico = new frmTipoServico(u);
              DialogResult dialog = frmtiposervico.ShowDialog();
              if (dialog == DialogResult.Yes || dialog == DialogResult.No)
              {
