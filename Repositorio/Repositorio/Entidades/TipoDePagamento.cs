@@ -1,13 +1,19 @@
 ﻿using NHibernate;
 using Repositorio.DAO;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Repositorio.Entidades
 {
     public class TipoDePagamento
     {
+        [Key]
         public virtual int Id { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Campo Descricao é Necessario!")]
+        [StringLength(18, MinimumLength = 3, ErrorMessage = "Campo Descricao precisa conter no minimo de 3 caracteres")]
         public virtual string Descricao { get; set; }
+
         public virtual IList<Pagamento> Pagamentos { get; set; }
 
         public virtual int Save(ISession session)

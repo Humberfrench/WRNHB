@@ -58,6 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="frmArmazenamento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmArmazenamento.Designer.cs">
+      <DependentUpon>frmArmazenamento.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmCliente.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +81,12 @@
     </Compile>
     <Compile Include="frmMenu.Designer.cs">
       <DependentUpon>frmMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmOrigemDoPedido.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmOrigemDoPedido.Designer.cs">
+      <DependentUpon>frmOrigemDoPedido.cs</DependentUpon>
     </Compile>
     <Compile Include="frmTipoArmazenamento.cs">
       <SubType>Form</SubType>
@@ -105,6 +117,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="frmArmazenamento.resx">
+      <DependentUpon>frmArmazenamento.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmCliente.resx">
       <DependentUpon>frmCliente.cs</DependentUpon>
     </EmbeddedResource>

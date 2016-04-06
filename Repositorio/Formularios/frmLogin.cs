@@ -27,10 +27,10 @@ namespace Formularios
             return usuario;
         }
         protected void Entrar()
-        {
-            session = NHibernateHelper.AbreSession();
+        {           
             try
             {
+                session = NHibernateHelper.AbreSession();
                 usuario = ValidarCampos();
                 if (usuario == null)
                     return;
@@ -50,13 +50,14 @@ namespace Formularios
                     MessageBox.Show("Usuario e/ou senha incorreta ", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     limparCampos();
                     txtLogin.Focus();
-                }                
+                }
+                session.Close();
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error: " + e.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);                
+                MessageBox.Show("Error: " + e.Message + " : " + e.InnerException.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);                
             }
-            session.Close();
+            
         }
         protected Usuario ValidarCampos()
         {

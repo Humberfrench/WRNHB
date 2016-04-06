@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using Repositorio.Annotation;
 using Repositorio.DAO;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,9 +12,10 @@ namespace Repositorio.Entidades
         public virtual int Id { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Campo Descricao é Necessario!")]
-        [StringLength(18, MinimumLength = 3, ErrorMessage = "Nome Descricao conter no minimo de 3 caracteres")]
+        [StringLength(18, MinimumLength = 3, ErrorMessage = "Campo Descricao precisa conter no minimo de 3 caracteres")]
         public virtual string Descricao { get; set; }
-        public virtual IList<Armazenamento> Armazenamentos {get;set;}
+
+        public virtual IList<Armazenamento> Armazenamentos { get; set; }
 
         public virtual int Save(ISession session)
         {

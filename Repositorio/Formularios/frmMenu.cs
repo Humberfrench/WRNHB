@@ -69,24 +69,24 @@ namespace Formularios
 
         private void origemDosPedidosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*Hide();
-            frmOrigempedido frmorigempedido = new frmOrigempedido(u);
+            Hide();
+            frmOrigemDoPedido frmorigempedido = new frmOrigemDoPedido(u);
             DialogResult dialog = frmorigempedido.ShowDialog();
             if (dialog == DialogResult.Yes || dialog == DialogResult.No)
             {
                 Show();
-            }*/
+            }
         }
 
         private void armazenametosToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            /*Hide();
+            Hide();
             frmArmazenamento frmarmazenamento = new frmArmazenamento(u);
             DialogResult dialog = frmarmazenamento.ShowDialog();
             if (dialog == DialogResult.Yes || dialog == DialogResult.No)
             {
                 Show();
-            }*/
+            }
         }
 
         private void tiposDeArmazenamentosToolStripMenuItem_Click(object sender, EventArgs e)

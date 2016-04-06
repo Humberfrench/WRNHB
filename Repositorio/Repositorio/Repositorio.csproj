@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Annotation\ValidaComboBoxAttribute.cs" />
     <Compile Include="DAO\ArmazenamentoDAO.cs" />
     <Compile Include="DAO\ClienteDAO.cs" />
     <Compile Include="DAO\ClienteDAOCNPJ.cs" />

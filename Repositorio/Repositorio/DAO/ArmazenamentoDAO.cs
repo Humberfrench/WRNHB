@@ -11,7 +11,7 @@ namespace Repositorio.DAO
     {
         public ArmazenamentoDAO(ISession session) : base(session) { }
 
-        public IList<Armazenamento> BuscaPorNomeDeArmazenamento(OrigemDoPedido u)
+        public IList<Armazenamento> BuscaPorNomeDeArmazenamento(Armazenamento u)
         {
             ICriteria criteria = _session.CreateCriteria<Armazenamento>();
 
