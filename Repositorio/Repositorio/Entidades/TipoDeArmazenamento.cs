@@ -1,5 +1,4 @@
 ﻿using NHibernate;
-using Repositorio.Annotation;
 using Repositorio.DAO;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

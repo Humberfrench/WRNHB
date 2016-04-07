@@ -1,4 +1,5 @@
 ﻿using NHibernate;
+using Repositorio.Annotation;
 using Repositorio.Entidades;
 using Repositorio.Infra;
 using System;
@@ -255,7 +256,10 @@ namespace Formularios
             {
                 Id = (txtCodigo.Text != "NOVO") ? Convert.ToInt32(txtCodigo.Text) : 0,
                 Descricao = txtDescricao.Text.ToUpper(),
-                TipodeArmazenamento = (tipoarmazenamento.Any()) ? tipoarmazenamento.First() : null
+                TipodeArmazenamento = (tipoarmazenamento.Any()) ? tipoarmazenamento.First() : new TipoDeArmazenamento
+                {
+                    Descricao = ""
+                }
             };
 
             ValidationContext context = new ValidationContext(u, null, null);
@@ -263,7 +267,24 @@ namespace Formularios
 
             if (!Validator.TryValidateObject(u, context, errors, true))
             {
-                foreach (var erro in errors)
+                validar(errors);                
+                return null;
+            }
+            else
+                return u;
+        }
+        private void validar(IEnumerable<ValidationResult> results)
+        {
+            foreach (var erro in results)
+            {
+                if (erro is CompositeValidationResult)
+                {
+                    MessageBox.Show(erro.ErrorMessage, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cmbTipoArm.Focus();                    
+                    break;
+                    //para validar todos os campos do objeto(recursivo) - validar(((CompositeValidationResult)erro).Results);
+                }
+                else
                 {
                     MessageBox.Show(erro.ErrorMessage, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
@@ -279,11 +300,8 @@ namespace Formularios
                             break;
                     }
                     break;
-                }
-                return null;
+                }               
             }
-            else
-                return u;
         }
         private bool validarCampoCodigo()
         {
@@ -353,7 +371,7 @@ namespace Formularios
                 session = NHibernateHelper.AbreSession();
 
                 listTipodearmazenamento = t.List(session);
-                cmbTipoArm.Items.Add("SELECIONAR");
+                cmbTipoArm.Items.Add("");
                 foreach (var item in listTipodearmazenamento)
                 {
                     cmbTipoArm.Items.Add(item.Descricao);
